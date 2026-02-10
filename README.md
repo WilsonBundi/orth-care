@@ -1,198 +1,211 @@
-# Patient Portal with Secure Authentication
+# Orthopaedics Care - Healthcare Portal System
 
-A complete hospital management system starting with a secure patient portal featuring authentication, authorization, profile management, and comprehensive audit logging.
+A complete healthcare management system with patient portal, appointments, medical records, billing, and comprehensive security features.
 
 ## 🎯 Features
 
-### Patient Portal
-- ✅ Secure patient registration with validation
-- ✅ Email/password authentication
-- ✅ Session management (30-minute timeout)
-- ✅ Profile view and update
-- ✅ Password change with validation
-- ✅ Dashboard with navigation
+### ✅ Patient Portal
+- **Registration & Authentication**
+  - 6-step registration wizard with validation
+  - Citizenship information (Kenyan/Foreign/Resident)
+  - Location selection (County → Constituency → Ward)
+  - Dependants management
+  - Secure login with email/ID
+  - Session management
+  - Password change
 
-### Security
-- ✅ Password hashing with bcrypt (work factor 12)
-- ✅ Account lockout (3 failed attempts = 15 min lock)
-- ✅ CSRF protection
-- ✅ Input sanitization
-- ✅ Security headers (CSP, HSTS, X-Frame-Options)
-- ✅ SQL injection prevention (parameterized queries)
-- ✅ HTTPS enforcement
+- **Profile Management**
+  - Complete patient profile view
+  - Personal information
+  - Contact details
+  - Location information
+  - Dependants list
 
-### Audit & Compliance
-- ✅ Tamper-evident audit logging with SHA-256 hash chain
-- ✅ Request/response logging with correlation IDs
-- ✅ Role-based access control (RBAC)
-- ✅ Comprehensive error handling
+### ✅ Appointments
+- **Booking System**
+  - Select specialty and doctor
+  - Choose date and time slots
+  - Appointment types (Consultation, Follow-up, Emergency)
+  - Reason and symptoms input
+
+- **Management**
+  - View upcoming appointments
+  - View past appointments
+  - Reschedule appointments
+  - Cancel appointments
+
+### ✅ Medical Records
+- **Document Management**
+  - Upload medical documents (drag & drop)
+  - Categorize by type (Lab Results, X-Rays, Prescriptions, Reports)
+  - View and download documents
+  - Search and filter
+
+### ✅ Billing & Payments
+- **Invoice System**
+  - Automatic invoice generation
+  - Multiple line items
+  - Tax and discount support
+  - Outstanding balance tracking
+
+- **Payment Processing**
+  - M-Pesa integration ready
+  - Card payment support
+  - Bank transfer
+  - Payment history
+
+### ✅ Notifications
+- **Email Notifications** (SendGrid)
+  - Appointment confirmations
+  - Appointment reminders
+  - Password reset
+
+- **SMS Notifications** (Twilio)
+  - Appointment reminders
+  - Important updates
+
+### 🔒 Security
+- Password hashing (bcrypt)
+- JWT authentication
+- Session management
+- Rate limiting
+- CSRF protection
+- Input sanitization
+- SQL injection prevention
+- XSS protection
+- Security headers
+- Audit logging
+- MFA support (optional)
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+
-- PostgreSQL 14+ (local) OR Cloud Database (Neon, Supabase, Railway, etc.)
+- PostgreSQL 14+
 - npm or yarn
 
 ### Installation
 
-1. **Install dependencies**:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/WilsonBundi/orth-care.git
+   cd orth-care
+   ```
+
+2. **Install dependencies**:
    ```bash
    npm install
    ```
 
-2. **Setup database**:
-   
-   **Option A - Cloud Database (Recommended):**
-   - Sign up at [Neon](https://neon.tech), [Supabase](https://supabase.com), or [Railway](https://railway.app)
-   - Create a PostgreSQL database
-   - Copy the DATABASE_URL connection string
-   - See [CLOUD_DATABASE_SETUP.md](CLOUD_DATABASE_SETUP.md) for detailed guides
-   
-   **Option B - Local PostgreSQL:**
+3. **Setup database**:
    ```bash
+   # Create database
    psql -U postgres
    CREATE DATABASE patient_portal;
    \q
+
+   # Run migrations
+   psql -U postgres -d patient_portal -f src/db/schema.sql
+   psql -U postgres -d patient_portal -f src/db/schema_enterprise.sql
+   psql -U postgres -d patient_portal -f src/db/invoices_schema.sql
    ```
 
-3. **Configure environment**:
+4. **Configure environment**:
    ```bash
    copy .env.example .env
    ```
    
-   Edit `.env`:
-   - **For cloud**: Set `DATABASE_URL=postgresql://...`
-   - **For local**: Set `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`
+   Edit `.env` with your settings:
+   ```env
+   # Database
+   DATABASE_URL=postgresql://postgres:password@localhost:5432/patient_portal
 
-4. **Run migrations**:
-   ```bash
-   npm run build
-   npm run migrate
-   npm run seed
+   # Server
+   PORT=3000
+   NODE_ENV=development
+
+   # JWT
+   JWT_SECRET=your_jwt_secret_key_here
+   JWT_EXPIRES_IN=24h
+
+   # Email (Optional - SendGrid)
+   SENDGRID_API_KEY=your_sendgrid_api_key
+   SENDGRID_FROM_EMAIL=noreply@orthocare.go.ke
+
+   # SMS (Optional - Twilio)
+   TWILIO_ACCOUNT_SID=your_twilio_account_sid
+   TWILIO_AUTH_TOKEN=your_twilio_auth_token
+   TWILIO_PHONE_NUMBER=+254700000000
+
+   # Redis (Optional)
+   REDIS_URL=redis://localhost:6379
+
+   # App URL
+   APP_URL=http://localhost:3000
    ```
 
-5. **Start server**:
+5. **Start the server**:
    ```bash
    npm run dev
    ```
 
-6. **Access application**:
+6. **Access the application**:
    ```
    http://localhost:3000
    ```
 
-📖 **Detailed setup instructions**: See [SETUP.md](SETUP.md)  
-🏃 **Quick run guide**: See [RUN_SYSTEM.md](RUN_SYSTEM.md)  
-☁️ **Cloud database guide**: See [CLOUD_DATABASE_SETUP.md](CLOUD_DATABASE_SETUP.md)  
-⚡ **5-minute cloud setup**: See [CLOUD_QUICK_START.md](CLOUD_QUICK_START.md)  
-🔥 **Supabase setup**: See [SUPABASE_SETUP.md](SUPABASE_SETUP.md)  
-⚡ **Connect existing Supabase**: See [CONNECT_SUPABASE.md](CONNECT_SUPABASE.md) ← **Start here!**
-
 ## 📁 Project Structure
 
 ```
-patient-portal-auth/
+orth-care/
 ├── src/
-│   ├── config/
-│   │   └── logger.ts              # Winston logger configuration
-│   ├── controllers/
-│   │   ├── authController.ts      # Authentication endpoints
-│   │   ├── profileController.ts   # Profile management
-│   │   └── dashboardController.ts # Dashboard data
-│   ├── db/
-│   │   ├── config.ts              # Database connection pool
-│   │   ├── schema.sql             # Database schema
-│   │   ├── migrate.ts             # Migration script
-│   │   └── seed.ts                # Seed permissions
-│   ├── middleware/
-│   │   ├── auth.ts                # Authentication middleware
-│   │   ├── authorization.ts       # RBAC middleware
-│   │   ├── csrf.ts                # CSRF protection
-│   │   ├── errorHandler.ts        # Global error handler
-│   │   ├── inputSanitization.ts   # Input sanitization
-│   │   ├── requestLogger.ts       # Request/response logging
-│   │   └── security.ts            # Security headers
-│   ├── repositories/
-│   │   ├── UserRepository.ts      # User data access
-│   │   ├── SessionRepository.ts   # Session management
-│   │   ├── AuditRepository.ts     # Audit logging
-│   │   └── PermissionRepository.ts # Permissions
-│   ├── routes/
-│   │   └── index.ts               # API routes
-│   ├── services/
-│   │   ├── AuthenticationService.ts # Auth business logic
-│   │   ├── AuthorizationService.ts  # RBAC logic
-│   │   ├── PasswordService.ts       # Password hashing
-│   │   ├── ProfileService.ts        # Profile management
-│   │   ├── SessionService.ts        # Session management
-│   │   └── AuditService.ts          # Audit logging
-│   ├── types/
-│   │   ├── models.ts              # TypeScript interfaces
-│   │   └── validation.ts          # Validation utilities
-│   └── index.ts                   # Application entry point
+│   ├── config/           # Configuration files
+│   ├── controllers/      # Request handlers
+│   ├── db/              # Database schemas and migrations
+│   ├── middleware/      # Express middleware
+│   ├── repositories/    # Data access layer
+│   ├── routes/          # API routes
+│   ├── services/        # Business logic
+│   └── types/           # TypeScript types
 ├── public/
-│   ├── login.html                 # Login page
-│   ├── register.html              # Registration page
-│   ├── dashboard.html             # Dashboard
-│   ├── profile.html               # Profile management
-│   └── password-change.html       # Password change
-├── logs/                          # Application logs
-├── .env.example                   # Environment template
-├── SETUP.md                       # Detailed setup guide
-├── RUN_SYSTEM.md                  # Quick run guide
-└── README.md                      # This file
+│   ├── *.html          # Frontend pages
+│   └── js/             # Frontend JavaScript
+├── logs/               # Application logs
+└── docs/               # Documentation
 ```
 
-## 🧪 Testing
+## 📱 User Journey
 
-```bash
-# Run all tests
-npm test
+### New User Registration
+1. Visit landing page → Click "Register Now"
+2. Complete 6-step registration
+3. Receive welcome email
+4. Login with credentials
 
-# Watch mode
-npm run test:watch
+### Booking an Appointment
+1. Login → Dashboard → Appointments
+2. Select specialty and doctor
+3. Choose date and time slot
+4. Submit booking
+5. Receive confirmation email/SMS
 
-# Coverage report
-npm run test:coverage
-```
+### Managing Medical Records
+1. Dashboard → Medical Records
+2. Upload documents (drag & drop)
+3. View/download documents
+4. Filter by type
 
-Test coverage includes:
-- Unit tests for all services and repositories
-- Integration tests for API endpoints
-- Property-based tests with fast-check
-- 100+ test cases total
-
-## 🔒 Security Implementation
-
-### Password Requirements
-- Minimum 8 characters
-- At least one uppercase letter
-- At least one lowercase letter
-- At least one number
-- At least one special character
-
-### Session Management
-- 30-minute inactivity timeout
-- Secure, httpOnly, sameSite cookies
-- Session invalidation on logout
-- Cleanup of expired sessions
-
-### Account Protection
-- 3 failed login attempts trigger 15-minute lockout
-- Failed attempt counter resets on successful login
-- Lockout automatically expires after 15 minutes
-
-### Audit Trail
-- Tamper-evident hash chain using SHA-256
-- Sequential event IDs prevent deletion
-- Logs all authentication events
-- Includes user ID, IP, timestamp, and details
+### Paying Bills
+1. Dashboard → Billing
+2. View outstanding invoices
+3. Select payment method (M-Pesa/Card/Bank)
+4. Complete payment
+5. Receive confirmation
 
 ## 📊 API Endpoints
 
 ### Authentication
-- `POST /api/auth/register` - Register new patient
+- `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - Login
 - `POST /api/auth/logout` - Logout
 - `POST /api/auth/change-password` - Change password
@@ -200,6 +213,20 @@ Test coverage includes:
 ### Profile
 - `GET /api/profile` - Get user profile
 - `PUT /api/profile` - Update profile
+
+### Appointments
+- `POST /api/appointments` - Create appointment
+- `GET /api/appointments/my-appointments` - Get user appointments
+- `GET /api/appointments/upcoming` - Get upcoming appointments
+- `GET /api/appointments/available-slots` - Get available time slots
+- `POST /api/appointments/:id/cancel` - Cancel appointment
+
+### Invoices
+- `POST /api/invoices` - Create invoice
+- `GET /api/invoices/my-invoices` - Get user invoices
+- `GET /api/invoices/outstanding` - Get outstanding invoices
+- `GET /api/invoices/outstanding-balance` - Get total balance
+- `POST /api/invoices/:id/payment` - Record payment
 
 ### Dashboard
 - `GET /api/dashboard` - Get dashboard data
@@ -209,65 +236,61 @@ Test coverage includes:
 
 ## 🛠️ Technology Stack
 
-- **Runtime**: Node.js 18+ with TypeScript 5.3+
-- **Web Framework**: Express.js 4.18+
-- **Database**: PostgreSQL 14+ with pg driver
-- **Security**: bcrypt 5+, helmet, csurf
-- **Logging**: Winston 3+
-- **Testing**: Jest 29+ with ts-jest, fast-check 3+
+- **Backend**: Node.js, TypeScript, Express.js
+- **Database**: PostgreSQL
+- **Authentication**: JWT, bcrypt
+- **Security**: Helmet, CSRF protection
+- **Logging**: Winston
+- **Email**: SendGrid (optional)
+- **SMS**: Twilio (optional)
+- **Caching**: Redis (optional)
 
-## 📝 Environment Variables
+## 🧪 Testing
 
-**Cloud Database (Recommended):**
-```env
-DATABASE_URL=postgresql://user:password@host:port/database?sslmode=require
-PORT=3000
-NODE_ENV=development
-SESSION_SECRET=change-this-in-production
-LOG_LEVEL=info
+```bash
+# Run tests
+npm test
+
+# Watch mode
+npm run test:watch
+
+# Coverage
+npm run test:coverage
 ```
 
-**Local Database:**
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=patient_portal
-DB_USER=postgres
-DB_PASSWORD=your_password
-PORT=3000
-NODE_ENV=development
-SESSION_SECRET=change-this-in-production
-LOG_LEVEL=info
-```
+## 📝 Documentation
 
-## 🎯 Implementation Status
+- `FULL_IMPLEMENTATION_COMPLETE.md` - Complete implementation details
+- `SYSTEM_COMPLETE.md` - System overview
+- `SETUP.md` - Detailed setup guide
 
-This is **Phase 1** of the hospital management system:
+## 🤝 Contributing
 
-✅ **Completed (42/42 tasks)**:
-- Project infrastructure
-- Type definitions and validation
-- Password service with bcrypt
-- All repositories (User, Session, Audit, Permission)
-- All services (Auth, Authorization, Profile, Session, Audit)
-- All middleware (Auth, RBAC, Security, CSRF, Input Sanitization, Logging)
-- All controllers (Auth, Profile, Dashboard)
-- API routes
-- Frontend pages (Login, Register, Dashboard, Profile, Password Change)
-- Database schema and migrations
-- Logging configuration
-- Documentation
-
-## 🚀 Future Phases
-
-- Phase 2: Patient medical records
-- Phase 3: Appointment management
-- Phase 4: Communication & notifications
-- Phase 5: Billing & invoices
-- Phase 6: Management dashboard
-- Phase 7: Additional user roles (doctors, nurses, clerks)
-- Phase 8: Advanced features
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-MIT
+MIT License - see LICENSE file for details
+
+## 👥 Authors
+
+- Wilson Bundi - [@WilsonBundi](https://github.com/WilsonBundi)
+
+## 🙏 Acknowledgments
+
+- Inspired by SHA Kenya (Social Health Authority)
+- Built for orthopaedic healthcare management
+
+## 📞 Support
+
+For support, email support@orthocare.go.ke or visit http://localhost:3000/help.html
+
+---
+
+**Status**: Production Ready  
+**Version**: 1.0.0  
+**Last Updated**: February 2026
