@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Orthopaedics Care Portal</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .header { background: #4CAF50; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 24px; }
+        .nav { display: flex; gap: 20px; }
+        .nav a { color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; }
+        .nav a:hover { background: rgba(255,255,255,0.2); }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .welcome { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .welcome h2 { color: #333; margin-bottom: 10px; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+        .card h3 { color: #4CAF50; margin-bottom: 15px; }
+        .card p { color: #666; margin-bottom: 20px; }
+        .card a { display: inline-block; padding: 10px 20px; background: #4CAF50; color: white; text-decoration: none; border-radius: 4px; }
+        .card a:hover { background: #45a049; }
+        .btn-logout { background: #f44336; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+        .btn-logout:hover { background: #da190b; }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+            
+            .nav a, .btn-logout {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            .welcome {
+                padding: 20px;
+            }
+            
+            .welcome h2 {
+                font-size: 20px;
+            }
+            
+            .welcome p {
+                font-size: 14px;
+            }
+            
+            .cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 12px;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .nav {
+                gap: 8px;
+            }
+            
+            .nav a, .btn-logout {
+                padding: 10px;
+                font-size: 13px;
+            }
+            
+            .welcome {
+                padding: 15px;
+            }
+            
+            .welcome h2 {
+                font-size: 18px;
+            }
+            
+            .card h3 {
+                font-size: 18px;
+            }
+            
+            .card p {
+                font-size: 13px;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Orthopaedics Care Portal</h1>
+        <div class="nav">
+            <a href="/dashboard.html">Dashboard</a>
+            <a href="/profile.html">Profile</a>
+            <a href="/password-change.html">Change Password</a>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="welcome">
+            <h2>Welcome, <span id="userName"></span>!</h2>
+            <p>Access your medical records, appointments, and more from your dashboard.</p>
+        </div>
+        
+        <div class="cards">
+            <div class="card">
+                <h3>📋 Medical Records</h3>
+                <p>View your complete medical history and reports</p>
+                <a href="/medical-records.html">View Records</a>
+            </div>
+            
+            <div class="card">
+                <h3>📅 Appointments</h3>
+                <p>Book, view, and manage your appointments</p>
+                <a href="/appointments.html">Manage Appointments</a>
+            </div>
+            
+            <div class="card">
+                <h3>👤 My Profile</h3>
+                <p>View your complete profile with personal details, location, and dependants</p>
+                <a href="/patient-profile.html">View Profile</a>
+            </div>
+            
+            <div class="card">
+                <h3>💰 Billing</h3>
+                <p>View invoices and make payments online</p>
+                <a href="/billing.html">View Billing</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        
+        if (!token) {
+            window.location.href = '/login.html';
+        }
+        
+        document.getElementById('userName').textContent = `${user.firstName} ${user.lastName}`;
+        
+        async function logout() {
+            try {
+                await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+            
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>

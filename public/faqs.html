@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQs - Orthopaedics Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .site-title h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .site-title p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .header-nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .page-header h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .faq-category {
+            margin-bottom: 50px;
+        }
+
+        .faq-category h3 {
+            color: #1e3c72;
+            font-size: 28px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .faq-item {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #1e3c72;
+            font-size: 18px;
+        }
+
+        .faq-toggle {
+            font-size: 24px;
+            color: #667eea;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #666;
+            padding-top: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-top: 15px;
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header-nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .header-nav a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .page-header {
+                padding: 40px 20px;
+            }
+
+            .page-header h2 {
+                font-size: 28px;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .faq-question {
+                font-size: 16px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">🏥</div>
+                <div class="site-title">
+                    <h1>Orthopaedics Care</h1>
+                    <p>Healthcare Portal System</p>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="/">Home</a>
+                <a href="/login.html">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Quick answers to common questions about our healthcare portal</p>
+    </div>
+
+    <div class="container">
+        <div class="faq-category">
+            <h3>🚀 Getting Started</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I create an account?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Click the "Register Now" button on the homepage and complete the 6-step registration process. You'll need to provide your citizenship information, personal details, location, contact information, and create a secure password. The process takes about 5-10 minutes.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What documents do I need to register?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    For Kenyan citizens, you'll need your National ID or Passport number. Foreign nationals need a valid Passport, while residents need an Alien ID. You'll also need your KRA PIN number and valid contact information (phone and email).
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>I forgot my password. How do I reset it?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Click "Forgot Password" on the login page, enter your registered email address, and follow the instructions sent to your email. The reset link is valid for 24 hours.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category">
+            <h3>📅 Appointments</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I book an appointment?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Log into your account, navigate to the Appointments section, select your preferred doctor and specialty, choose an available time slot, and confirm your booking. You'll receive a confirmation email and SMS.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I reschedule or cancel my appointment?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, you can reschedule or cancel appointments up to 24 hours before the scheduled time. Go to "My Appointments," select the appointment, and choose "Reschedule" or "Cancel." Please note that late cancellations may incur a fee.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Will I receive appointment reminders?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, you'll receive automatic reminders via SMS and email 24 hours before your appointment, and again 2 hours before. You can customize reminder preferences in your account settings.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category">
+            <h3>📋 Medical Records</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I access my medical records?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Log into your account and navigate to the "Medical Records" section. You can view your complete medical history, test results, prescriptions, and treatment plans. Records are updated in real-time after each visit.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I download or print my records?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, you can download your records as PDF files or print them directly from the portal. Each document includes a verification code for authenticity.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How secure are my medical records?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Your records are protected with enterprise-grade encryption and stored on secure servers. We comply with all healthcare data protection regulations. Only you and authorized healthcare providers can access your records.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category">
+            <h3>💊 Prescriptions</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I view my prescriptions?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Go to the "Prescriptions" section in your dashboard. You'll see all active and past prescriptions, including dosage instructions, refill information, and pharmacy details.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I request prescription refills online?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, you can request refills through the portal. Select the prescription, click "Request Refill," and your doctor will review and approve it. You'll be notified when it's ready for pickup at your chosen pharmacy.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category">
+            <h3>💰 Billing & Payments</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What payment methods do you accept?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    We accept M-Pesa, credit/debit cards (Visa, Mastercard), bank transfers, and insurance payments. All online payments are processed securely through encrypted channels.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I view my billing history?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Navigate to "Billing & Payments" in your dashboard to view all invoices, payment history, and outstanding balances. You can download receipts and invoices as PDF files.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Does the portal accept insurance?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, we work with major insurance providers in Kenya. Add your insurance information in your profile, and we'll process claims directly. You'll only pay any applicable co-payments or deductibles.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category">
+            <h3>🔒 Security & Privacy</h3>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is my personal information safe?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely. We use bank-level encryption (256-bit SSL) to protect all data transmission and storage. Our systems undergo regular security audits and comply with international healthcare data protection standards.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Who can see my medical information?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Only you and healthcare providers directly involved in your care can access your medical information. You can view an audit log of who has accessed your records and when.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I enable two-factor authentication?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes, we strongly recommend enabling two-factor authentication (2FA) for added security. Go to Security Settings and follow the setup instructions. You'll receive a verification code via SMS or authenticator app each time you log in.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/help.html">Help Center</a>
+                <a href="/faqs.html">FAQs</a>
+                <a href="/contact.html">Contact Us</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Orthopaedics Care. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ accordion functionality
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records - Orthopaedics Care</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 { font-size: 24px; }
+        
+        .nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav a:hover { background: rgba(255,255,255,0.2); }
+        
+        .btn-logout {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .upload-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .upload-section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area {
+            border: 3px dashed #ccc;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            border-color: #1e3c72;
+            background: #f8f9fa;
+        }
+        
+        .upload-area.dragover {
+            border-color: #1e3c72;
+            background: #e3f2fd;
+        }
+        
+        .upload-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .upload-area p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .upload-area input[type="file"] {
+            display: none;
+        }
+        
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+        
+        .records-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .records-section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .records-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .record-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #1e3c72;
+            transition: all 0.3s;
+        }
+        
+        .record-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .record-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .record-card h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .record-card p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .record-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .record-actions button {
+            flex: 1;
+            padding: 8px;
+            font-size: 13px;
+        }
+        
+        .file-type-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+        
+        .badge-lab { background: #e3f2fd; color: #1976d2; }
+        .badge-prescription { background: #f3e5f5; color: #7b1fa2; }
+        .badge-xray { background: #fff3e0; color: #f57c00; }
+        .badge-report { background: #e8f5e9; color: #388e3c; }
+        .badge-other { background: #f5f5f5; color: #616161; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h3 {
+            color: #1e3c72;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav a, .btn-logout {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .records-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>📋 Medical Records</h1>
+            <nav class="nav">
+                <a href="/dashboard.html">Dashboard</a>
+                <a href="/patient-profile.html">Profile</a>
+                <a href="/appointments.html">Appointments</a>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            </nav>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h2>📤 Upload Medical Document</h2>
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📄</div>
+                <p><strong>Click to upload</strong> or drag and drop</p>
+                <p style="font-size: 13px;">PDF, JPG, PNG up to 10MB</p>
+                <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png" multiple>
+            </div>
+            <div id="uploadProgress" style="margin-top: 20px; display: none;">
+                <p>Uploading... <span id="progressText">0%</span></p>
+            </div>
+        </div>
+        
+        <!-- Records Section -->
+        <div class="records-section">
+            <h2>📁 My Medical Records</h2>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="filterType">Document Type</label>
+                    <select id="filterType" onchange="filterRecords()">
+                        <option value="all">All Types</option>
+                        <option value="lab_result">Lab Results</option>
+                        <option value="prescription">Prescriptions</option>
+                        <option value="xray">X-Rays</option>
+                        <option value="medical_report">Medical Reports</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="filterDate">Date Range</label>
+                    <select id="filterDate" onchange="filterRecords()">
+                        <option value="all">All Time</option>
+                        <option value="week">Last Week</option>
+                        <option value="month">Last Month</option>
+                        <option value="year">Last Year</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="searchRecords">Search</label>
+                    <input type="text" id="searchRecords" placeholder="Search records..." oninput="filterRecords()">
+                </div>
+            </div>
+            
+            <div id="recordsList" class="records-grid">
+                <!-- Records will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Upload Details Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Document Details</h3>
+                <button class="close-modal" onclick="closeUploadModal()">×</button>
+            </div>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="docType">Document Type *</label>
+                    <select id="docType" required>
+                        <option value="">Select Type</option>
+                        <option value="lab_result">Lab Result</option>
+                        <option value="prescription">Prescription</option>
+                        <option value="xray">X-Ray</option>
+                        <option value="medical_report">Medical Report</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="docTitle">Title *</label>
+                    <input type="text" id="docTitle" required placeholder="e.g., Blood Test Results">
+                </div>
+                
+                <div class="form-group">
+                    <label for="docDescription">Description</label>
+                    <textarea id="docDescription" rows="3" placeholder="Optional description"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="docDate">Document Date</label>
+                    <input type="date" id="docDate">
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Upload Document</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) window.location.href = '/login.html';
+        
+        let selectedFiles = [];
+        let allRecords = [];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadRecords();
+            setupDragAndDrop();
+        });
+        
+        // File input change
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function setupDragAndDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, () => {
+                    uploadArea.classList.add('dragover');
+                }, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, () => {
+                    uploadArea.classList.remove('dragover');
+                }, false);
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFiles(files);
+            }, false);
+        }
+        
+        function handleFiles(files) {
+            if (files.length === 0) return;
+            
+            selectedFiles = Array.from(files);
+            document.getElementById('uploadModal').classList.add('active');
+        }
+        
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            selectedFiles.forEach(file => {
+                formData.append('files', file);
+            });
+            
+            formData.append('fileType', document.getElementById('docType').value);
+            formData.append('title', document.getElementById('docTitle').value);
+            formData.append('description', document.getElementById('docDescription').value);
+            formData.append('documentDate', document.getElementById('docDate').value);
+            
+            try {
+                document.getElementById('uploadProgress').style.display = 'block';
+                
+                const response = await fetch('/api/files/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    alert('Document uploaded successfully!');
+                    closeUploadModal();
+                    loadRecords();
+                } else {
+                    alert('Upload failed. Please try again.');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                alert('Network error. Please try again.');
+            } finally {
+                document.getElementById('uploadProgress').style.display = 'none';
+            }
+        });
+        
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+            document.getElementById('uploadForm').reset();
+            selectedFiles = [];
+        }
+        
+        async function loadRecords() {
+            try {
+                const response = await fetch('/api/files/my-files', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    allRecords = await response.json();
+                    displayRecords(allRecords);
+                } else {
+                    // Show mock data for demo
+                    allRecords = getMockRecords();
+                    displayRecords(allRecords);
+                }
+            } catch (error) {
+                console.error('Error loading records:', error);
+                allRecords = getMockRecords();
+                displayRecords(allRecords);
+            }
+        }
+        
+        function getMockRecords() {
+            return [
+                {
+                    id: '1',
+                    filename: 'Blood Test Results - Jan 2026.pdf',
+                    fileType: 'lab_result',
+                    sizeBytes: 245000,
+                    createdAt: '2026-01-15T10:30:00Z',
+                    description: 'Complete blood count and chemistry panel'
+                },
+                {
+                    id: '2',
+                    filename: 'X-Ray - Right Knee.jpg',
+                    fileType: 'xray',
+                    sizeBytes: 1200000,
+                    createdAt: '2026-01-20T14:15:00Z',
+                    description: 'Knee injury assessment'
+                },
+                {
+                    id: '3',
+                    filename: 'Prescription - Pain Management.pdf',
+                    fileType: 'prescription',
+                    sizeBytes: 180000,
+                    createdAt: '2026-02-01T09:00:00Z',
+                    description: 'Post-surgery pain medication'
+                }
+            ];
+        }
+        
+        function displayRecords(records) {
+            const container = document.getElementById('recordsList');
+            
+            if (records.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">📁</div>
+                        <p>No medical records found</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Upload your first document above</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = records.map(record => {
+                const date = new Date(record.createdAt);
+                const size = formatFileSize(record.sizeBytes);
+                const icon = getFileIcon(record.fileType);
+                
+                return `
+                    <div class="record-card">
+                        <div class="record-icon">${icon}</div>
+                        <h3>${record.filename}</h3>
+                        <p>${record.description || 'No description'}</p>
+                        <p><strong>Date:</strong> ${date.toLocaleDateString()}</p>
+                        <p><strong>Size:</strong> ${size}</p>
+                        <span class="file-type-badge badge-${record.fileType}">${formatFileType(record.fileType)}</span>
+                        <div class="record-actions">
+                            <button class="btn btn-primary" onclick="viewRecord('${record.id}')">View</button>
+                            <button class="btn btn-secondary" onclick="downloadRecord('${record.id}')">Download</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function filterRecords() {
+            const type = document.getElementById('filterType').value;
+            const dateRange = document.getElementById('filterDate').value;
+            const search = document.getElementById('searchRecords').value.toLowerCase();
+            
+            let filtered = allRecords;
+            
+            // Filter by type
+            if (type !== 'all') {
+                filtered = filtered.filter(r => r.fileType === type);
+            }
+            
+            // Filter by date
+            if (dateRange !== 'all') {
+                const now = new Date();
+                const ranges = {
+                    week: 7,
+                    month: 30,
+                    year: 365
+                };
+                const days = ranges[dateRange];
+                filtered = filtered.filter(r => {
+                    const recordDate = new Date(r.createdAt);
+                    const diffDays = (now - recordDate) / (1000 * 60 * 60 * 24);
+                    return diffDays <= days;
+                });
+            }
+            
+            // Filter by search
+            if (search) {
+                filtered = filtered.filter(r => 
+                    r.filename.toLowerCase().includes(search) ||
+                    (r.description && r.description.toLowerCase().includes(search))
+                );
+            }
+            
+            displayRecords(filtered);
+        }
+        
+        function getFileIcon(type) {
+            const icons = {
+                lab_result: '🧪',
+                prescription: '💊',
+                xray: '🩻',
+                medical_report: '📋',
+                other: '📄'
+            };
+            return icons[type] || '📄';
+        }
+        
+        function formatFileType(type) {
+            const types = {
+                lab_result: 'Lab Result',
+                prescription: 'Prescription',
+                xray: 'X-Ray',
+                medical_report: 'Report',
+                other: 'Other'
+            };
+            return types[type] || 'Document';
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+        
+        function viewRecord(id) {
+            alert('View functionality: Opening document viewer...');
+            // In production, open document in viewer or new tab
+        }
+        
+        function downloadRecord(id) {
+            alert('Download functionality: Downloading document...');
+            // In production, trigger file download
+        }
+        
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>

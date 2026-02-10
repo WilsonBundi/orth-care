@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Orthopaedics Care</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .site-title h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .site-title p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .header-nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .page-header h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .contact-form h3 {
+            color: #1e3c72;
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .info-card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .info-card h4 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .info-card p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-card a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .info-card a:hover {
+            text-decoration: underline;
+        }
+
+        .office-hours {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        .office-hours h3 {
+            color: #1e3c72;
+            margin-bottom: 25px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .hours-item {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .hours-item h4 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .hours-item p {
+            color: #666;
+        }
+
+        .emergency-banner {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .emergency-banner h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .emergency-banner p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .emergency-banner .phone {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header-nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .header-nav a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .page-header {
+                padding: 40px 20px;
+            }
+
+            .page-header h2 {
+                font-size: 28px;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .contact-form,
+            .office-hours {
+                padding: 25px;
+            }
+
+            .hours-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">🏥</div>
+                <div class="site-title">
+                    <h1>Orthopaedics Care</h1>
+                    <p>Healthcare Portal System</p>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="/">Home</a>
+                <a href="/login.html">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <h2>Contact Us</h2>
+        <p>We're here to help. Reach out to us anytime</p>
+    </div>
+
+    <div class="container">
+        <div class="emergency-banner">
+            <h3>🚨 Medical Emergency?</h3>
+            <p>For immediate medical assistance, call our 24/7 emergency line</p>
+            <div class="phone">+254 700 000 000</div>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+254 700 000 000">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Subject *</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a subject</option>
+                            <option value="appointment">Appointment Inquiry</option>
+                            <option value="billing">Billing Question</option>
+                            <option value="medical">Medical Records</option>
+                            <option value="technical">Technical Support</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="info-card-icon">📞</div>
+                    <h4>Phone Support</h4>
+                    <p><strong>Main Line:</strong> <a href="tel:+254700000000">+254 700 000 000</a></p>
+                    <p><strong>Emergency:</strong> <a href="tel:+254700000000">+254 700 000 000</a></p>
+                    <p><strong>Appointments:</strong> <a href="tel:+254700000001">+254 700 000 001</a></p>
+                    <p>Available 24/7</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-icon">📧</div>
+                    <h4>Email Support</h4>
+                    <p><strong>General:</strong> <a href="mailto:info@orthocare.go.ke">info@orthocare.go.ke</a></p>
+                    <p><strong>Support:</strong> <a href="mailto:support@orthocare.go.ke">support@orthocare.go.ke</a></p>
+                    <p><strong>Billing:</strong> <a href="mailto:billing@orthocare.go.ke">billing@orthocare.go.ke</a></p>
+                    <p>Response within 24 hours</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-icon">📍</div>
+                    <h4>Visit Us</h4>
+                    <p><strong>Main Hospital</strong></p>
+                    <p>Orthopaedics Care Center</p>
+                    <p>Kenyatta Avenue</p>
+                    <p>Nairobi, Kenya</p>
+                    <p>P.O. Box 12345-00100</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-icon">💬</div>
+                    <h4>Live Chat</h4>
+                    <p>Chat with our support team</p>
+                    <p><strong>Available:</strong> Mon-Fri, 8AM-6PM</p>
+                    <p>Login to your account to access live chat</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="office-hours">
+            <h3>Office Hours</h3>
+            <div class="hours-grid">
+                <div class="hours-item">
+                    <h4>🏥 Outpatient Services</h4>
+                    <p>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                    <p>Saturday: 9:00 AM - 2:00 PM</p>
+                    <p>Sunday: Closed</p>
+                </div>
+
+                <div class="hours-item">
+                    <h4>🚑 Emergency Services</h4>
+                    <p>24 Hours / 7 Days a Week</p>
+                    <p>Always Available</p>
+                </div>
+
+                <div class="hours-item">
+                    <h4>💊 Pharmacy</h4>
+                    <p>Monday - Saturday: 8:00 AM - 8:00 PM</p>
+                    <p>Sunday: 10:00 AM - 4:00 PM</p>
+                </div>
+
+                <div class="hours-item">
+                    <h4>🧪 Laboratory</h4>
+                    <p>Monday - Friday: 7:00 AM - 7:00 PM</p>
+                    <p>Saturday: 8:00 AM - 4:00 PM</p>
+                    <p>Sunday: Closed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/">Home</a>
+                <a href="/help.html">Help Center</a>
+                <a href="/faqs.html">FAQs</a>
+                <a href="/contact.html">Contact Us</a>
+                <a href="/privacy.html">Privacy Policy</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Orthopaedics Care. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+
+            console.log('Contact form submitted:', formData);
+            
+            // Show success message
+            alert('Thank you for contacting us! We will respond to your message within 24 hours.');
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>

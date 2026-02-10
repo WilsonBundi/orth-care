@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing & Payments - Orthopaedics Care</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 { font-size: 24px; }
+        
+        .nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav a:hover { background: rgba(255,255,255,0.2); }
+        
+        .btn-logout {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .balance-card h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .balance-amount {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .balance-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-white {
+            background: white;
+            color: #667eea;
+        }
+        
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: #667eea;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: #1e3c72;
+            border-bottom-color: #1e3c72;
+            font-weight: 600;
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .card h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .invoices-list {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .invoice-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #1e3c72;
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .invoice-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+        
+        .invoice-details p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .invoice-amount {
+            text-align: right;
+        }
+        
+        .invoice-amount .total {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+        
+        .invoice-amount .balance {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .invoice-actions {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+        
+        .invoice-actions button {
+            padding: 8px 16px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-paid { background: #d4edda; color: #155724; }
+        .status-partially_paid { background: #d1ecf1; color: #0c5460; }
+        .status-overdue { background: #f8d7da; color: #721c24; }
+        .status-cancelled { background: #e2e3e5; color: #383d41; }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        
+        .empty-state-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .payment-method {
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:hover {
+            border-color: #1e3c72;
+            background: #f8f9fa;
+        }
+        
+        .payment-method.selected {
+            border-color: #1e3c72;
+            background: #e3f2fd;
+        }
+        
+        .payment-method-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .payment-method h4 {
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h3 {
+            color: #1e3c72;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav a, .btn-logout {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .balance-amount {
+                font-size: 36px;
+            }
+            
+            .invoice-item {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .invoice-actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>💰 Billing & Payments</h1>
+            <nav class="nav">
+                <a href="/dashboard.html">Dashboard</a>
+                <a href="/patient-profile.html">Profile</a>
+                <a href="/appointments.html">Appointments</a>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            </nav>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Outstanding Balance Card -->
+        <div class="balance-card">
+            <h2>Outstanding Balance</h2>
+            <div class="balance-amount" id="outstandingBalance">KES 0.00</div>
+            <div class="balance-actions">
+                <button class="btn btn-white" onclick="payAll()">Pay All</button>
+                <button class="btn btn-outline" onclick="switchTab('outstanding')">View Outstanding</button>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('all')">All Invoices</button>
+            <button class="tab" onclick="switchTab('outstanding')">Outstanding</button>
+            <button class="tab" onclick="switchTab('paid')">Paid</button>
+        </div>
+        
+        <!-- All Invoices Tab -->
+        <div id="all-tab" class="tab-content active">
+            <div class="card">
+                <h2>All Invoices</h2>
+                <div id="allInvoicesList" class="invoices-list">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">💰</div>
+                        <p>Loading invoices...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Outstanding Tab -->
+        <div id="outstanding-tab" class="tab-content">
+            <div class="card">
+                <h2>Outstanding Invoices</h2>
+                <div id="outstandingInvoicesList" class="invoices-list">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <p>Loading invoices...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Paid Tab -->
+        <div id="paid-tab" class="tab-content">
+            <div class="card">
+                <h2>Paid Invoices</h2>
+                <div id="paidInvoicesList" class="invoices-list">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✅</div>
+                        <p>Loading invoices...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Make Payment</h3>
+                <button class="close-modal" onclick="closePaymentModal()">×</button>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <p><strong>Invoice:</strong> <span id="paymentInvoiceNumber"></span></p>
+                <p><strong>Amount Due:</strong> KES <span id="paymentAmount"></span></p>
+            </div>
+            
+            <div class="form-group">
+                <label>Select Payment Method</label>
+                <div class="payment-methods">
+                    <div class="payment-method" onclick="selectPaymentMethod('mpesa')">
+                        <div class="payment-method-icon">📱</div>
+                        <h4>M-Pesa</h4>
+                        <p style="font-size: 12px; color: #666;">Mobile Money</p>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('card')">
+                        <div class="payment-method-icon">💳</div>
+                        <h4>Card</h4>
+                        <p style="font-size: 12px; color: #666;">Visa/Mastercard</p>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('bank')">
+                        <div class="payment-method-icon">🏦</div>
+                        <h4>Bank Transfer</h4>
+                        <p style="font-size: 12px; color: #666;">Direct Transfer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="mpesaForm" style="display: none;">
+                <div class="form-group">
+                    <label for="mpesaPhone">M-Pesa Phone Number</label>
+                    <input type="tel" id="mpesaPhone" placeholder="+254 700 000 000">
+                </div>
+            </div>
+            
+            <div id="cardForm" style="display: none;">
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label for="cardExpiry">Expiry</label>
+                        <input type="text" id="cardExpiry" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label for="cardCVV">CVV</label>
+                        <input type="text" id="cardCVV" placeholder="123">
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn btn-success" style="width: 100%;" onclick="processPayment()">Pay Now</button>
+        </div>
+    </div>
+    
+    <script src="/js/billing.js"></script>
+</body>
+</html>
