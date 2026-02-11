@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Placement Guide - Orthopedic's Care</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #1e3c72;
+            text-align: center;
+        }
+        .image-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .image-card h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .image-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .filename {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        .section {
+            color: #764ba2;
+            font-weight: bold;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .missing {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .found {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <h1>📸 Image Placement Guide</h1>
+    <p style="text-align: center; color: #666;">Save your images with these exact filenames in the <code>public/images/</code> folder</p>
+
+    <div class="image-card">
+        <h2>1. Doctor Consultation</h2>
+        <div class="filename">doctor-consultation.jpg</div>
+        <div class="section">Section: Features - Expert Orthopedic Care</div>
+        <p><strong>Description:</strong> Image showing doctor with patient consultation or medical professional</p>
+        <p><strong>Position:</strong> Left side, first feature section</p>
+        <img src="/images/doctor-consultation.jpg" alt="Doctor Consultation" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="status missing" style="display:none;">❌ Image not found - Please add this image</div>
+    </div>
+
+    <div class="image-card">
+        <h2>2. Medical Facility</h2>
+        <div class="filename">medical-facility.jpg</div>
+        <div class="section">Section: Features - State-of-the-Art Facilities</div>
+        <p><strong>Description:</strong> Image showing doctor with stethoscope or modern medical facility</p>
+        <p><strong>Position:</strong> Right side, second feature section</p>
+        <img src="/images/medical-facility.jpg" alt="Medical Facility" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="status missing" style="display:none;">❌ Image not found - Please add this image</div>
+    </div>
+
+    <div class="image-card">
+        <h2>3. Digital Health</h2>
+        <div class="filename">digital-health.jpg</div>
+        <div class="section">Section: Features - Digital Health Management</div>
+        <p><strong>Description:</strong> Image showing medical injection/treatment or digital health technology</p>
+        <p><strong>Position:</strong> Left side, third feature section</p>
+        <img src="/images/digital-health.jpg" alt="Digital Health" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="status missing" style="display:none;">❌ Image not found - Please add this image</div>
+    </div>
+
+    <div class="image-card">
+        <h2>4. Joint Pain</h2>
+        <div class="filename">joint-pain.jpg</div>
+        <div class="section">Section: Services - Joint Replacement Excellence</div>
+        <p><strong>Description:</strong> Illustration showing ankle/foot joint pain (blue/red medical illustration)</p>
+        <p><strong>Position:</strong> Left side, first service section</p>
+        <img src="/images/joint-pain.jpg" alt="Joint Pain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="status missing" style="display:none;">❌ Image not found - Please add this image</div>
+    </div>
+
+    <div class="image-card">
+        <h2>5. Knee Pain</h2>
+        <div class="filename">knee-pain.jpg</div>
+        <div class="section">Section: Services - Sports Medicine & Performance</div>
+        <p><strong>Description:</strong> Illustration showing running figure with knee pain (blue medical illustration)</p>
+        <p><strong>Position:</strong> Right side, second service section</p>
+        <img src="/images/knee-pain.jpg" alt="Knee Pain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="status missing" style="display:none;">❌ Image not found - Please add this image</div>
+    </div>
+
+    <div class="image-card">
+        <h2>6. Shoulder Pain</h2>
+        <div class="filename">shoulder-pain.jpg</div>
+        <div class="section">Section: Services - Comprehensive Pain Management</div>
+        <p><strong>Description:</strong> Illustration showing shoulder/elbow pain (blue/red medical illustration)</p>
+        <p><strong>Position:</strong> Left side, third service section</p>
+        <img src="/images/shoulder-pain.jpg" alt="Shoulder Pain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="status missing" style="display:none;">❌ Image not found - Please add this image</div>
+    </div>
+
+    <div style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin-top: 30px;">
+        <h3 style="color: #1976d2; margin-top: 0;">📝 Quick Steps:</h3>
+        <ol style="color: #555;">
+            <li>Save your 6 medical images with the exact filenames shown above</li>
+            <li>Copy all images to: <code>public/images/</code> folder</li>
+            <li>Refresh the main page: <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></li>
+            <li>Your images will appear automatically!</li>
+        </ol>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/" style="display: inline-block; padding: 15px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 50px; font-weight: bold;">
+            ← Back to Home Page
+        </a>
+    </div>
+</body>
+</html>

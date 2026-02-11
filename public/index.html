@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orthopaedics Care - Healthcare Portal</title>
+    <title>Orthopedic's Care - Specialized Orthopedic Clinic</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -11,24 +13,183 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --light-gradient: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --shadow-heavy: 0 15px 35px rgba(31, 38, 135, 0.5);
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-light: #718096;
         }
 
-        /* Header */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-size: 18px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-gradient);
+        }
+
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+            66% {
+                transform: translateY(-8px) rotate(-1deg);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(102, 126, 234, 0.8);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes morphing {
+            0%, 100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            }
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Glass Morphism Effect */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* Enhanced Header */
         .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.95) 0%, rgba(42, 82, 152, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem 0;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            animation: slideInDown 1s ease-out;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .header-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -37,65 +198,267 @@
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 1rem;
+            animation: fadeInLeft 1.2s ease-out 0.3s both;
         }
 
         .logo {
-            width: 50px;
-            height: 50px;
-            background: white;
-            border-radius: 8px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 28px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float 4s ease-in-out infinite;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .logo:hover::before {
+            left: 100%;
+        }
+
+        .logo:hover {
+            transform: rotate(360deg) scale(1.15);
+            animation-play-state: paused;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
         }
 
         .site-title h1 {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 2px;
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .site-title p {
-            font-size: 13px;
+            font-size: 16px;
             opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
         .header-nav {
             display: flex;
-            gap: 20px;
+            gap: 2rem;
+            animation: fadeInRight 1.2s ease-out 0.5s both;
         }
 
         .header-nav a {
             color: white;
             text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            transition: all 0.3s;
+            padding: 12px 24px;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-weight: 500;
+            font-size: 17px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            letter-spacing: 0.3px;
+        }
+
+        .header-nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .header-nav a:hover::before {
+            left: 100%;
         }
 
         .header-nav a:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
         .btn-primary {
-            background: white !important;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%) !important;
             color: #1e3c72 !important;
+            box-shadow: 0 8px 25px rgba(255,255,255,0.3);
+            font-weight: 600;
         }
 
-        /* Hero Section */
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255,255,255,0.4);
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%) !important;
+        }
+
+        /* Enhanced Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
             color: white;
-            padding: 80px 20px;
+            padding: 140px 2rem 100px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            animation: morphing 10s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.5" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="0.8" fill="white" opacity="0.08"/><circle cx="50" cy="10" r="0.6" fill="white" opacity="0.12"/><circle cx="10" cy="60" r="0.4" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.7" fill="white" opacity="0.09"/><circle cx="30" cy="80" r="0.5" fill="white" opacity="0.11"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 25s ease-in-out infinite;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1.2s ease-out 0.8s both;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #ffffff 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1.2s ease-out 0.8s both, shimmer 3s ease-in-out infinite;
+        }
+
+        .hero-content p {
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            animation: fadeInUp 1.2s ease-out 1s both;
+            line-height: 1.8;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.2s ease-out 1.2s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 20px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+        }
+
+        .btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .btn-white {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,255,0.95) 100%);
+            color: #667eea;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-white:hover {
+            background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(248,249,255,1) 100%);
+            color: #1e3c72;
+        }
+
+        .btn-outline {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.6);
+            color: white;
         }
 
         .hero h2 {
@@ -150,143 +513,633 @@
             color: #667eea;
         }
 
-        /* Features Section */
+        /* Enhanced Features Section */
         .features {
-            padding: 80px 20px;
-            background: #f8f9fa;
+            padding: 120px 2rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(240, 147, 251, 0.08) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .features::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><pattern id="dots" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="1.5" fill="rgba(102,126,234,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23dots)"/></svg>');
+            opacity: 0.4;
+        }
+
+        /* Section with Image Layout */
+        .section-with-image {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-with-image.reverse {
+            direction: rtl;
+        }
+
+        .section-with-image.reverse > * {
+            direction: ltr;
+        }
+
+        .section-image {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(31, 38, 135, 0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .section-image:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 30px 80px rgba(31, 38, 135, 0.4);
+        }
+
+        .section-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .section-image:hover img {
+            transform: scale(1.1);
+        }
+
+        .section-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .section-image:hover::before {
+            opacity: 1;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .section-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1e3c72 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .section-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section-content ul li {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .section-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.3rem;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease-out forwards;
+        }
+
+        .section-title.animate {
+            animation-delay: 0.2s;
         }
 
         .section-title h2 {
-            font-size: 36px;
-            color: #1e3c72;
-            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 5vw, 4rem);
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            font-weight: 600;
+            background: linear-gradient(135deg, #1e3c72 0%, #667eea 50%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            border-radius: 2px;
+            animation: glow 3s ease-in-out infinite;
         }
 
         .section-title p {
-            font-size: 18px;
-            color: #666;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+            line-height: 1.8;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
         }
 
         .feature-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 3rem 2.5rem;
+            border-radius: 24px;
+            box-shadow: 
+                0 8px 32px rgba(31, 38, 135, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
+        }
+
+        .feature-card.animate {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+        .feature-card:nth-child(5) { animation-delay: 0.5s; }
+        .feature-card:nth-child(6) { animation-delay: 0.6s; }
+
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 
+                0 20px 60px rgba(102, 126, 234, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.3) rotate(10deg);
+            animation: pulse 1.5s ease-in-out;
         }
 
         .feature-card h3 {
-            font-size: 22px;
-            color: #1e3c72;
-            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            transition: color 0.3s ease;
+            font-weight: 600;
+        }
+
+        .feature-card:hover h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .feature-card p {
-            color: #666;
+            color: var(--text-secondary);
             line-height: 1.8;
+            transition: color 0.3s ease;
+            font-weight: 300;
+            font-size: 1.1rem;
         }
 
-        /* Services Section */
+        .feature-card:hover p {
+            color: var(--text-primary);
+        }
+
+        /* Enhanced Services Section */
         .services {
-            padding: 80px 20px;
-            background: white;
+            padding: 120px 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+            animation: morphing 15s ease-in-out infinite;
+        }
+
+        .services::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><defs><pattern id="hexagons" width="80" height="80" patternUnits="userSpaceOnUse"><polygon points="40,10 60,25 60,55 40,70 20,55 20,25" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23hexagons)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .services .section-title h2 {
+            color: white;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .services .section-title h2::after {
+            background: linear-gradient(90deg, #ffffff, rgba(255,255,255,0.8), #ffffff);
+        }
+
+        .services .section-title p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Services Section Image Styling */
+        .services .section-content h3 {
+            color: white;
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: white;
+            background-clip: unset;
+        }
+
+        .services .section-content p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .services .section-content ul li {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .services .section-content ul li::before {
+            color: white;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 60px;
         }
 
         .service-item {
-            padding: 30px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            transition: all 0.3s;
+            padding: 2.5rem;
+            border-radius: 20px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
         }
 
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ffffff, rgba(255,255,255,0.8), #ffffff);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .service-item:hover::after {
+            left: 100%;
+        }
+
+        .service-item.animate {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .service-item:nth-child(1) { animation-delay: 0.1s; }
+        .service-item:nth-child(2) { animation-delay: 0.2s; }
+        .service-item:nth-child(3) { animation-delay: 0.3s; }
+        .service-item:nth-child(4) { animation-delay: 0.4s; }
+        .service-item:nth-child(5) { animation-delay: 0.5s; }
+        .service-item:nth-child(6) { animation-delay: 0.6s; }
+
         .service-item:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(31, 38, 135, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         .service-item h4 {
-            color: #1e3c72;
-            margin-bottom: 10px;
-            font-size: 18px;
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .service-item:hover h4 {
+            transform: translateX(5px);
         }
 
         .service-item p {
-            color: #666;
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            line-height: 1.6;
+            font-weight: 300;
         }
 
-        /* CTA Section */
+        .service-item:hover p {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Enhanced CTA Section */
         .cta {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
             color: white;
-            padding: 80px 20px;
+            padding: 120px 2rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        .cta::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.3"/><circle cx="80" cy="30" r="1.5" fill="white" opacity="0.2"/><circle cx="30" cy="70" r="1" fill="white" opacity="0.4"/><circle cx="70" cy="80" r="1.2" fill="white" opacity="0.25"/><circle cx="50" cy="15" r="0.8" fill="white" opacity="0.35"/></pattern></defs><rect width="100%" height="100%" fill="url(%23stars)"/></svg>');
+            animation: float 30s ease-in-out infinite;
+        }
+
+        .cta .container {
+            position: relative;
+            z-index: 3;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .cta .container.animate {
+            animation: fadeInUp 1.2s ease-out forwards;
         }
 
         .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .cta p {
-            font-size: 18px;
-            margin-bottom: 40px;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            margin-bottom: 3rem;
             opacity: 0.95;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* Footer */
+        /* Enhanced Footer */
         .footer {
-            background: #1a1a1a;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             color: white;
-            padding: 60px 20px 30px;
+            padding: 80px 2rem 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #667eea);
+            background-size: 300% 100%;
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        .footer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
         }
 
+        .footer-section {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .footer-section.animate {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .footer-section:nth-child(1) { animation-delay: 0.1s; }
+        .footer-section:nth-child(2) { animation-delay: 0.2s; }
+        .footer-section:nth-child(3) { animation-delay: 0.3s; }
+        .footer-section:nth-child(4) { animation-delay: 0.4s; }
+
         .footer-section h3 {
-            margin-bottom: 20px;
-            font-size: 18px;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
         }
 
         .footer-section ul {
@@ -294,28 +1147,74 @@
         }
 
         .footer-section ul li {
-            margin-bottom: 10px;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            padding-left: 0;
+        }
+
+        .footer-section ul li:hover {
+            transform: translateX(8px);
+            padding-left: 8px;
         }
 
         .footer-section a {
-            color: #ccc;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 300;
+            font-size: 1rem;
+        }
+
+        .footer-section a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .footer-section a:hover::before {
+            width: 100%;
         }
 
         .footer-section a:hover {
             color: white;
+            text-shadow: 0 0 8px rgba(102, 126, 234, 0.6);
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-weight: 300;
+            font-size: 1rem;
         }
 
         .footer-bottom {
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #333;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            font-weight: 300;
+        }
             color: #999;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+            
             .header-content {
                 flex-direction: column;
                 gap: 15px;
@@ -331,6 +1230,16 @@
             .header-nav a {
                 width: 100%;
                 text-align: center;
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+
+            .site-title h1 {
+                font-size: 24px;
+            }
+            
+            .site-title p {
+                font-size: 14px;
             }
 
             .hero {
@@ -338,11 +1247,11 @@
             }
 
             .hero h2 {
-                font-size: 28px;
+                font-size: 2.2rem !important;
             }
 
             .hero p {
-                font-size: 16px;
+                font-size: 1.2rem !important;
             }
 
             .hero-buttons {
@@ -352,6 +1261,8 @@
 
             .btn {
                 width: 100%;
+                font-size: 1.1rem;
+                padding: 16px 32px;
             }
             
             .features, .services, .cta {
@@ -359,11 +1270,44 @@
             }
             
             .section-title h2 {
-                font-size: 28px;
+                font-size: 2.2rem !important;
             }
             
             .section-title p {
-                font-size: 16px;
+                font-size: 1.1rem !important;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.4rem;
+            }
+            
+            .feature-card p {
+                font-size: 1rem;
+            }
+            
+            .service-item h4 {
+                font-size: 1.3rem;
+            }
+            
+            .service-item p {
+                font-size: 1rem;
+            }
+            
+            .cta h2 {
+                font-size: 2.2rem !important;
+            }
+            
+            .cta p {
+                font-size: 1.1rem !important;
+            }
+            
+            .footer-section h3 {
+                font-size: 1.3rem;
+            }
+            
+            .footer-section a,
+            .footer-section p {
+                font-size: 0.95rem;
             }
             
             .features-grid, .services-grid {
@@ -374,6 +1318,37 @@
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
+            }
+
+            /* Mobile Image Sections */
+            .section-with-image {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin-bottom: 4rem;
+            }
+
+            .section-with-image.reverse {
+                direction: ltr;
+            }
+
+            .section-image {
+                height: 300px;
+            }
+
+            .section-content {
+                padding: 1rem;
+            }
+
+            .section-content h3 {
+                font-size: 1.8rem;
+            }
+
+            .section-content p {
+                font-size: 1rem;
+            }
+
+            .section-content ul li {
+                font-size: 0.95rem;
             }
         }
         
@@ -432,10 +1407,10 @@
     <header class="header">
         <div class="header-content">
             <div class="logo-section">
-                <div class="logo">🏥</div>
+                <div class="logo"><i class="fas fa-hospital-alt"></i></div>
                 <div class="site-title">
-                    <h1>Orthopaedics Care</h1>
-                    <p>Healthcare Portal System</p>
+                    <h1>Orthopedic's Care</h1>
+                    <p>Specialized Orthopedic Clinic</p>
                 </div>
             </div>
             <nav class="header-nav">
@@ -449,11 +1424,17 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h2>Welcome to Orthopaedics Care</h2>
-            <p>Your comprehensive healthcare portal for managing appointments, medical records, and healthcare services. Access quality orthopaedic care from anywhere, anytime.</p>
+            <h2>Welcome to Orthopedic's Care</h2>
+            <p>A specialized orthopedic clinic led by a qualified orthopedic doctor. We provide comprehensive diagnosis, treatment, and rehabilitation for bone, joint, and muscle conditions—helping you relieve pain, restore movement, and return to daily life with confidence.</p>
             <div class="hero-buttons">
-                <a href="/register.html" class="btn btn-white">Register Now</a>
-                <a href="/login.html" class="btn btn-outline">Login</a>
+                <a href="/register.html" class="btn btn-white">
+                    <i class="fas fa-user-plus"></i>
+                    Register Now
+                </a>
+                <a href="/login.html" class="btn btn-outline">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </a>
             </div>
         </div>
     </section>
@@ -462,39 +1443,91 @@
     <section class="features" id="features">
         <div class="container">
             <div class="section-title">
-                <h2>Why Choose Our Portal</h2>
-                <p>Experience seamless healthcare management with our advanced portal system</p>
+                <h2>Why Choose Orthopedic's Care</h2>
+                <p>Expert orthopedic care with comprehensive digital health management</p>
             </div>
+
+            <!-- Feature Section 1: Expert Care -->
+            <div class="section-with-image">
+                <div class="section-image">
+                    <img src="/images/doctor-consultation.jpg" alt="Orthopedic Doctor Consultation" loading="lazy">
+                </div>
+                <div class="section-content">
+                    <h3>Expert Orthopedic Care</h3>
+                    <p>Our qualified orthopedic doctor provides specialized treatment for all bone, joint, and muscle conditions with years of experience and cutting-edge techniques.</p>
+                    <ul>
+                        <li>Board-certified orthopedic specialist</li>
+                        <li>Advanced diagnostic capabilities</li>
+                        <li>Personalized treatment plans</li>
+                        <li>Comprehensive rehabilitation programs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Feature Section 2: Modern Facilities -->
+            <div class="section-with-image reverse">
+                <div class="section-image">
+                    <img src="/images/medical-facility.jpg" alt="Modern Medical Facility" loading="lazy">
+                </div>
+                <div class="section-content">
+                    <h3>State-of-the-Art Facilities</h3>
+                    <p>Our clinic is equipped with the latest medical technology and modern facilities to ensure you receive the best possible care in a comfortable environment.</p>
+                    <ul>
+                        <li>Advanced imaging and diagnostics</li>
+                        <li>Modern surgical equipment</li>
+                        <li>Comfortable recovery rooms</li>
+                        <li>Hygienic and safe environment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Feature Section 3: Digital Health -->
+            <div class="section-with-image">
+                <div class="section-image">
+                    <img src="/images/digital-health.jpg" alt="Digital Health Management" loading="lazy">
+                </div>
+                <div class="section-content">
+                    <h3>Digital Health Management</h3>
+                    <p>Access your complete medical records, book appointments, and communicate with your doctor through our secure online portal anytime, anywhere.</p>
+                    <ul>
+                        <li>24/7 online access to records</li>
+                        <li>Easy appointment scheduling</li>
+                        <li>Secure messaging with doctor</li>
+                        <li>Digital prescription management</li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">📅</div>
+                    <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
                     <h3>Easy Appointments</h3>
-                    <p>Book, reschedule, and manage your appointments online with just a few clicks. Get instant confirmation and reminders.</p>
+                    <p>Book consultations with our qualified orthopedic doctor online. Get instant confirmation and appointment reminders.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📋</div>
+                    <div class="feature-icon"><i class="fas fa-file-medical"></i></div>
                     <h3>Medical Records</h3>
-                    <p>Access your complete medical history, test results, and treatment plans securely from anywhere.</p>
+                    <p>Access your orthopedic treatment history, X-rays, MRI results, and rehabilitation plans securely from anywhere.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💊</div>
-                    <h3>Prescriptions</h3>
-                    <p>View and manage your prescriptions, request refills, and track your medication history.</p>
+                    <div class="feature-icon"><i class="fas fa-bone"></i></div>
+                    <h3>Specialized Care</h3>
+                    <p>Expert diagnosis and treatment for bone, joint, and muscle conditions with personalized rehabilitation programs.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                     <h3>Secure & Private</h3>
                     <p>Your health information is protected with enterprise-grade security and encryption.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💬</div>
+                    <div class="feature-icon"><i class="fas fa-comments-medical"></i></div>
                     <h3>Direct Communication</h3>
-                    <p>Message your healthcare providers directly and get timely responses to your questions.</p>
+                    <p>Message your orthopedic doctor directly and get timely responses to your questions about treatment.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💰</div>
+                    <div class="feature-icon"><i class="fas fa-credit-card"></i></div>
                     <h3>Billing & Payments</h3>
-                    <p>View invoices, make secure online payments, and track your billing history.</p>
+                    <p>View treatment invoices, make secure online payments, and track your billing history.</p>
                 </div>
             </div>
         </div>
@@ -507,30 +1540,82 @@
                 <h2>Our Orthopaedic Services</h2>
                 <p>Comprehensive care for all your musculoskeletal needs</p>
             </div>
+
+            <!-- Service Section 1: Joint Replacement -->
+            <div class="section-with-image">
+                <div class="section-image">
+                    <img src="/images/joint-pain.jpg" alt="Joint Pain Treatment" loading="lazy">
+                </div>
+                <div class="section-content">
+                    <h3><i class="fas fa-bone"></i> Joint Replacement Excellence</h3>
+                    <p>Our advanced joint replacement procedures restore mobility and eliminate pain using the latest surgical techniques and prosthetic technology.</p>
+                    <ul>
+                        <li>Hip and knee replacement surgery</li>
+                        <li>Shoulder and elbow procedures</li>
+                        <li>Minimally invasive techniques</li>
+                        <li>Fast recovery protocols</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service Section 2: Sports Medicine -->
+            <div class="section-with-image reverse">
+                <div class="section-image">
+                    <img src="/images/knee-pain.jpg" alt="Sports Medicine Treatment" loading="lazy">
+                </div>
+                <div class="section-content">
+                    <h3><i class="fas fa-running"></i> Sports Medicine & Performance</h3>
+                    <p>Specialized treatment for athletes and active individuals, helping you return to peak performance safely and quickly.</p>
+                    <ul>
+                        <li>ACL and ligament reconstruction</li>
+                        <li>Rotator cuff repair</li>
+                        <li>Arthroscopic procedures</li>
+                        <li>Performance optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service Section 3: Pain Management -->
+            <div class="section-with-image">
+                <div class="section-image">
+                    <img src="/images/shoulder-pain.jpg" alt="Pain Management" loading="lazy">
+                </div>
+                <div class="section-content">
+                    <h3><i class="fas fa-hand-holding-medical"></i> Comprehensive Pain Management</h3>
+                    <p>Advanced pain management techniques to help you live pain-free and improve your quality of life.</p>
+                    <ul>
+                        <li>Non-surgical pain relief options</li>
+                        <li>Injection therapy</li>
+                        <li>Physical therapy programs</li>
+                        <li>Chronic pain management</li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="services-grid">
                 <div class="service-item">
-                    <h4>🦴 Joint Replacement</h4>
-                    <p>Advanced hip, knee, and shoulder replacement procedures</p>
+                    <h4><i class="fas fa-bone"></i> Joint Replacement</h4>
+                    <p>Advanced hip, knee, and shoulder replacement procedures with cutting-edge technology</p>
                 </div>
                 <div class="service-item">
-                    <h4>🏃 Sports Medicine</h4>
-                    <p>Treatment for sports injuries and athletic performance</p>
+                    <h4><i class="fas fa-running"></i> Sports Medicine</h4>
+                    <p>Comprehensive treatment for sports injuries and athletic performance optimization</p>
                 </div>
                 <div class="service-item">
-                    <h4>🔧 Trauma Care</h4>
-                    <p>Emergency treatment for fractures and injuries</p>
+                    <h4><i class="fas fa-ambulance"></i> Trauma Care</h4>
+                    <p>Emergency treatment for fractures and acute orthopedic injuries</p>
                 </div>
                 <div class="service-item">
-                    <h4>🧘 Spine Care</h4>
-                    <p>Comprehensive spine treatment and surgery</p>
+                    <h4><i class="fas fa-spine"></i> Spine Care</h4>
+                    <p>Comprehensive spine treatment, surgery, and rehabilitation programs</p>
                 </div>
                 <div class="service-item">
-                    <h4>👶 Pediatric Orthopaedics</h4>
-                    <p>Specialized care for children's bone and joint conditions</p>
+                    <h4><i class="fas fa-child"></i> Pediatric Orthopedics</h4>
+                    <p>Specialized care for children's bone and joint conditions with gentle approach</p>
                 </div>
                 <div class="service-item">
-                    <h4>💪 Physical Therapy</h4>
-                    <p>Rehabilitation and recovery programs</p>
+                    <h4><i class="fas fa-dumbbell"></i> Physical Therapy</h4>
+                    <p>Professional rehabilitation and recovery programs for optimal healing</p>
                 </div>
             </div>
         </div>
@@ -540,10 +1625,16 @@
     <section class="cta">
         <div class="container">
             <h2>Ready to Get Started?</h2>
-            <p>Join thousands of users who trust us with their orthopaedic care</p>
+            <p>Experience expert orthopedic care with our qualified doctor and comprehensive treatment approach</p>
             <div class="hero-buttons">
-                <a href="/register.html" class="btn btn-white">Create Account</a>
-                <a href="/login.html" class="btn btn-outline">Sign In</a>
+                <a href="/register.html" class="btn btn-white">
+                    <i class="fas fa-user-plus"></i>
+                    Create Account
+                </a>
+                <a href="/login.html" class="btn btn-outline">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </a>
             </div>
         </div>
     </section>
@@ -553,7 +1644,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>About Us</h3>
-                <p>Orthopaedics Care is dedicated to providing exceptional musculoskeletal healthcare services with a patient-centered approach.</p>
+                <p>Orthopedic's Care is a specialized orthopedic clinic led by a qualified orthopedic doctor, providing comprehensive diagnosis, treatment, and rehabilitation for bone, joint, and muscle conditions.</p>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
@@ -584,8 +1675,286 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Orthopaedics Care. All rights reserved. | Powered by Enterprise Healthcare Portal</p>
+            <p>&copy; 2026 Orthopedic's Care - Specialized Orthopedic Clinic. All rights reserved. | Powered by Healthcare Portal</p>
         </div>
     </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Enhanced Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        // Enhanced page loading and animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Loading overlay
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            setTimeout(() => {
+                loadingOverlay.classList.add('fade-out');
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                }, 500);
+            }, 1000);
+
+            // Observe elements for animation
+            const elementsToObserve = [
+                '.section-title',
+                '.feature-card',
+                '.service-item',
+                '.cta .container',
+                '.footer-section'
+            ];
+
+            elementsToObserve.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(element => observer.observe(element));
+            });
+
+            // Enhanced smooth scrolling
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Enhanced parallax effect
+            let ticking = false;
+            function updateParallax() {
+                const scrolled = window.pageYOffset;
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            });
+
+            // Enhanced typing effect for hero title
+            const heroTitle = document.querySelector('.hero-content h2');
+            if (heroTitle) {
+                const text = heroTitle.textContent;
+                heroTitle.textContent = '';
+                heroTitle.style.borderRight = '3px solid white';
+                heroTitle.style.animation = 'none';
+                
+                let i = 0;
+                const typeWriter = () => {
+                    if (i < text.length) {
+                        heroTitle.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 80);
+                    } else {
+                        setTimeout(() => {
+                            heroTitle.style.borderRight = 'none';
+                            heroTitle.style.animation = 'fadeInUp 1.2s ease-out 0.8s both, shimmer 3s ease-in-out infinite';
+                        }, 1000);
+                    }
+                };
+                
+                setTimeout(typeWriter, 2000);
+            }
+
+            // Enhanced button ripple effects
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const ripple = document.createElement('span');
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                        background: rgba(255,255,255,0.4);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.8s ease-out;
+                        pointer-events: none;
+                        z-index: 1;
+                    `;
+                    
+                    button.style.position = 'relative';
+                    button.style.overflow = 'hidden';
+                    button.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 800);
+                });
+            });
+
+            // Scroll progress indicator
+            const progressBar = document.createElement('div');
+            progressBar.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 4px;
+                background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+                z-index: 9999;
+                transition: width 0.1s ease;
+                box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+            `;
+            document.body.appendChild(progressBar);
+
+            // Scroll to top button
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progressBar.style.width = scrollPercent + '%';
+
+                // Show/hide scroll to top button
+                if (scrollTop > 300) {
+                    scrollToTopBtn.classList.add('show');
+                } else {
+                    scrollToTopBtn.classList.remove('show');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Enhanced card hover effects
+            const cards = document.querySelectorAll('.feature-card, .service-item');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-15px) scale(1.03)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add CSS for enhanced animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2.5);
+                        opacity: 0;
+                    }
+                }
+                
+                .feature-card, .service-item {
+                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+                }
+                
+                .btn {
+                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Preload images and optimize performance
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.loading = 'lazy';
+            });
+
+            // Add intersection observer for performance
+            if ('IntersectionObserver' in window) {
+                const lazyImages = document.querySelectorAll('img[data-src]');
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.classList.remove('lazy');
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(img => imageObserver.observe(img));
+            }
+        });
+
+        // Add mouse trail effect
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.style.cssText = `
+                position: fixed;
+                width: 6px;
+                height: 6px;
+                background: radial-gradient(circle, rgba(102, 126, 234, 0.8) 0%, transparent 70%);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9998;
+                left: ${e.clientX - 3}px;
+                top: ${e.clientY - 3}px;
+                animation: trailFade 0.8s ease-out forwards;
+            `;
+            
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                trail.remove();
+            }, 800);
+        });
+
+        // Add trail fade animation
+        const trailStyle = document.createElement('style');
+        trailStyle.textContent = `
+            @keyframes trailFade {
+                0% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: scale(0.3);
+                }
+            }
+        `;
+        document.head.appendChild(trailStyle);
+    </script>
 </body>
 </html>

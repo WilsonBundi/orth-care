@@ -1,10 +1,20 @@
-# Orthopaedics Care - Healthcare Portal System
+# Orthopedic's Care - Specialized Orthopedic Clinic Portal
 
-A complete healthcare management system with patient portal, appointments, medical records, billing, and comprehensive security features.
+A comprehensive healthcare management system for a specialized orthopedic clinic led by a qualified orthopedic doctor. The system provides patient portal, appointments, medical records, billing, and comprehensive security features for bone, joint, and muscle condition management.
 
-## 🎯 Features
+## 🏥 About Orthopedic's Care
 
-### ✅ Patient Portal
+Orthopedic's Care is a specialized orthopedic clinic led by a qualified orthopedic doctor. We provide comprehensive diagnosis, treatment, and rehabilitation for bone, joint, and muscle conditions—helping patients relieve pain, restore movement, and return to daily life with confidence.
+
+### Our Specialties
+- **Joint Replacement** - Advanced hip, knee, and shoulder replacement procedures
+- **Sports Medicine** - Treatment for sports injuries and athletic performance
+- **Trauma Care** - Emergency treatment for fractures and injuries  
+- **Spine Care** - Comprehensive spine treatment and surgery
+- **Pediatric Orthopedics** - Specialized care for children's bone and joint conditions
+- **Physical Therapy** - Rehabilitation and recovery programs
+
+## 🎯 Portal Features
 - **Registration & Authentication**
   - 6-step registration wizard with validation
   - Citizenship information (Kenyan/Foreign/Resident)

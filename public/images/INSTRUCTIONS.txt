@@ -1,0 +1,52 @@
+HOW TO ADD YOUR MEDICAL IMAGES
+================================
+
+Please save your 6 medical images in this folder (public/images/) with these exact names:
+
+1. doctor-consultation.jpg
+   - The image showing a doctor with patient/medical consultation
+   - Used in: Features Section (Expert Orthopedic Care)
+
+2. medical-facility.jpg
+   - The image showing a doctor with stethoscope/medical professional
+   - Used in: Features Section (State-of-the-Art Facilities)
+
+3. digital-health.jpg
+   - The image showing medical injection/treatment procedure
+   - Used in: Features Section (Digital Health Management)
+
+4. joint-pain.jpg
+   - The image showing ankle/foot joint pain (blue/red illustration)
+   - Used in: Services Section (Joint Replacement Excellence)
+
+5. knee-pain.jpg
+   - The image showing running figure with knee pain (blue illustration)
+   - Used in: Services Section (Sports Medicine & Performance)
+
+6. shoulder-pain.jpg
+   - The image showing shoulder/elbow pain (blue/red illustration)
+   - Used in: Services Section (Comprehensive Pain Management)
+
+STEPS:
+------
+1. Rename your images to match the names above
+2. Copy all 6 images to this folder: public/images/
+3. Refresh your browser at http://localhost:3000
+4. Your images will now appear on the landing page!
+
+SUPPORTED FORMATS:
+-----------------
+- JPG/JPEG (.jpg, .jpeg)
+- PNG (.png)
+- WebP (.webp)
+
+RECOMMENDED SIZE:
+----------------
+- Width: 800-1200px
+- Height: 600-900px
+- Aspect ratio: 4:3 or 16:9
+- File size: Under 500KB each (optimized for web)
+
+NOTE: The images are already configured in the HTML with proper styling,
+lazy loading, and responsive design. Just add your images and they'll
+work perfectly!
