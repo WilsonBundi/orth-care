@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import { Router, type Router as ExpressRouter } from 'express';
 import { invoiceController } from '../controllers/invoiceController';
 import { authenticate } from '../middleware/auth';
 import { apiRateLimiter } from '../middleware/rateLimiting';
 
-const router = Router();
+const router: ExpressRouter = Router();
 
 // All routes require authentication
 router.use(authenticate);

@@ -2,10 +2,10 @@
  * Password Reset Routes
  */
 
-import { Router } from 'express';
+import { Router, type Router as ExpressRouter } from 'express';
 import { requestPasswordReset, verifyResetToken, resetPassword } from '../controllers/passwordResetController';
 
-const router = Router();
+const router: ExpressRouter = Router();
 
 // Request password reset (send email with token)
 router.post('/request', requestPasswordReset);
