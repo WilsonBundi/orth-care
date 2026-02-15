@@ -1215,25 +1215,37 @@
                 font-size: 15px;
             }
             
-            /* Header */
+            /* Header - Fixed overflow issues */
+            .header {
+                padding: 1rem 0;
+            }
+            
             .header-content {
                 flex-direction: column;
-                gap: 12px;
+                gap: 15px;
                 text-align: center;
-                padding: 15px 10px;
+                padding: 0 15px;
+            }
+            
+            .logo-section {
+                width: 100%;
+                justify-content: center;
             }
             
             .header-nav {
-                flex-direction: column;
+                flex-direction: row;
+                flex-wrap: wrap;
                 width: 100%;
                 gap: 8px;
+                justify-content: center;
             }
             
             .header-nav a {
-                width: 100%;
+                flex: 0 1 auto;
                 text-align: center;
-                font-size: 15px;
-                padding: 12px 20px;
+                font-size: 14px;
+                padding: 10px 16px;
+                white-space: nowrap;
             }
 
             .site-title h1 {
@@ -1246,7 +1258,7 @@
 
             /* Hero Section */
             .hero {
-                padding: 40px 15px;
+                padding: 100px 15px 40px;
                 min-height: auto;
             }
 
@@ -1418,18 +1430,24 @@
             .logo {
                 width: 35px;
                 height: 35px;
+                font-size: 18px;
             }
             
             .site-title h1 {
-                font-size: 16px;
+                font-size: 18px;
             }
             
             .site-title p {
-                font-size: 10px;
+                font-size: 11px;
+            }
+            
+            .header-nav a {
+                font-size: 13px;
+                padding: 8px 12px;
             }
             
             .hero {
-                padding: 30px 12px;
+                padding: 90px 12px 30px;
             }
             
             .hero h2 {
