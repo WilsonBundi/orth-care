@@ -1,5 +1,4 @@
-import { permissionRepository } from '../repositories/PermissionRepository';
-import { userRepository } from '../repositories/UserRepository';
+import { permissionRepository, userRepository } from '../repositories';
 import { Permission, Role } from '../types/models';
 
 export class AuthorizationService {

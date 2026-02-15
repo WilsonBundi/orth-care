@@ -7,6 +7,7 @@ import { authorize } from '../middleware/authorization';
 import mfaRoutes from './mfa';
 import appointmentRoutes from './appointments';
 import invoiceRoutes from './invoiceRoutes';
+import passwordResetRoutes from './passwordReset';
 import { globalRateLimiter, authRateLimiter } from '../middleware/rateLimiting';
 
 const router: any = Router();
@@ -19,6 +20,9 @@ router.post('/auth/register', authRateLimiter, register);
 router.post('/auth/login', authRateLimiter, login);
 router.post('/auth/logout', authenticate, logout);
 router.post('/auth/change-password', authenticate, changePassword);
+
+// Password reset routes
+router.use('/password-reset', passwordResetRoutes);
 
 // MFA routes
 router.use('/mfa', mfaRoutes);

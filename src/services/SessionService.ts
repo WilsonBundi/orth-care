@@ -1,4 +1,4 @@
-import { sessionRepository } from '../repositories/SessionRepository';
+import { sessionRepository } from '../repositories';
 import { auditService } from './AuditService';
 import { Session, AuditEventType, LogoutReason } from '../types/models';
 import crypto from 'crypto';

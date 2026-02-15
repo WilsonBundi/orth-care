@@ -1,5 +1,5 @@
-import { userRepository } from '../repositories/UserRepository';
-import { sessionRepository } from '../repositories/SessionRepository';
+import { userRepository } from '../repositories';
+import { sessionRepository } from '../repositories';
 import { PasswordService } from './PasswordService';
 import { auditService } from './AuditService';
 import { User, Session, AuditEventType, Address } from '../types/models';

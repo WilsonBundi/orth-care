@@ -1,4 +1,4 @@
-import { auditRepository } from '../repositories/AuditRepository';
+import { auditRepository } from '../repositories';
 import { AuditEvent, AuditEventType } from '../types/models';
 
 export interface AuditEventOptions {

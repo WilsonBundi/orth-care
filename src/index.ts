@@ -1,13 +1,13 @@
 /**
  * Main application entry point
- * Enterprise-grade Express server with full configuration
+ * Enterprise-grade Express server with Firebase Firestore
  */
 
 import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import { testConnection, closePool } from './db/config';
+import { initializeFirebase, testFirebaseConnection, closeFirebase } from './config/firebase';
 import { redis, closeRedis } from './config/redis';
 import { securityHeaders, httpsRedirect } from './middleware/security';
 import { errorHandler } from './middleware/errorHandler';
@@ -21,6 +21,9 @@ dotenv.config();
 
 const app: any = express();
 const PORT = process.env.PORT || 3000;
+
+// Initialize Firebase
+initializeFirebase();
 
 // Request logging
 app.use(requestLogger);
@@ -46,7 +49,7 @@ app.use('/api', routes);
 
 // Health check endpoint
 app.get('/health', async (req, res) => {
-  const dbHealthy = await testConnection();
+  const dbHealthy = await testFirebaseConnection();
   const redisHealthy = redis.status === 'ready';
   
   const status = dbHealthy && redisHealthy ? 'healthy' : 'degraded';
@@ -66,8 +69,8 @@ app.get('/health', async (req, res) => {
 // Metrics endpoint
 app.get('/metrics', async (req, res) => {
   try {
-    const dbResult = await testConnection();
-    const redisInfo = await redis.info();
+    const dbResult = await testFirebaseConnection();
+    const redisInfo = redis.status === 'ready' ? await redis.info() : 'disconnected';
     
     res.json({
       uptime: process.uptime(),
@@ -91,14 +94,14 @@ app.use(errorHandler);
 // Graceful shutdown
 process.on('SIGTERM', async () => {
   console.log('SIGTERM received, shutting down gracefully...');
-  await closePool();
+  await closeFirebase();
   await closeRedis();
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
   console.log('SIGINT received, shutting down gracefully...');
-  await closePool();
+  await closeFirebase();
   await closeRedis();
   process.exit(0);
 });
@@ -107,11 +110,11 @@ process.on('SIGINT', async () => {
 async function startServer() {
   try {
     // Test database connection
-    console.log('Testing database connection...');
-    const dbConnected = await testConnection();
+    console.log('Testing Firebase connection...');
+    const dbConnected = await testFirebaseConnection();
     
     if (!dbConnected) {
-      console.error('Failed to connect to database. Please check your configuration.');
+      console.error('Failed to connect to Firebase. Please check your configuration.');
       process.exit(1);
     }
 
@@ -123,12 +126,12 @@ async function startServer() {
 
     // Start listening
     app.listen(PORT, () => {
-      console.log(`\n🚀 Enterprise Patient Portal Server`);
+      console.log(`\n🚀 Orthopedic's Care Portal Server`);
       console.log(`📍 Running on http://localhost:${PORT}`);
       console.log(`📊 Health check: http://localhost:${PORT}/health`);
       console.log(`📈 Metrics: http://localhost:${PORT}/metrics`);
       console.log(`\n🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
-      console.log(`💾 Database: ${process.env.DB_NAME || 'patient_portal'}`);
+      console.log(`💾 Database: Firebase Firestore (${process.env.FIREBASE_PROJECT_ID || 'not configured'})`);
       console.log(`🔴 Redis: ${redis.status === 'ready' ? 'Connected' : 'Disconnected'}\n`);
       console.log('📋 Available endpoints:');
       console.log('  Authentication:');

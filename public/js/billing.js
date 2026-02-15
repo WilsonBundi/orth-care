@@ -417,8 +417,22 @@ function formatPaymentMethod(method) {
     return methods[method] || method;
 }
 
-function logout() {
+async function logout() {
+    try {
+        await fetch('/api/auth/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    } catch (error) {
+        console.error('Logout error:', error);
+    }
+    
     localStorage.removeItem('token');
+    localStorage.removeItem('sessionId');
     localStorage.removeItem('user');
+    localStorage.removeItem('profileData');
     window.location.href = '/login.html';
 }

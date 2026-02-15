@@ -1,4 +1,4 @@
-import { userRepository } from '../repositories/UserRepository';
+import { userRepository } from '../repositories';
 import { auditService } from './AuditService';
 import { PatientProfile, ProfileUpdateRequest, AuditEventType, Address } from '../types/models';
 import { validateEmail, validatePhoneNumber, validateAddress } from '../types/validation';

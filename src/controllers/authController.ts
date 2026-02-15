@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { authenticationService } from '../services/AuthenticationService';
 import { sessionService } from '../services/SessionService';
 import { PasswordService } from '../services/PasswordService';
-import { userRepository } from '../repositories/UserRepository';
+import { userRepository } from '../repositories';
 import { auditService } from '../services/AuditService';
 import { AuthRequest } from '../middleware/auth';
 import { AuditEventType, LogoutReason } from '../types/models';
@@ -24,6 +24,26 @@ export async function register(req: Request, res: Response) {
       constituency,
       ward
     } = req.body;
+
+    console.log('Registration attempt:', { 
+      email, 
+      firstName, 
+      lastName, 
+      dateOfBirth, 
+      phoneNumber,
+      country,
+      county,
+      constituency,
+      ward,
+      address
+    });
+
+    // Validate required fields
+    if (!email || !password || !firstName || !lastName || !dateOfBirth || !phoneNumber) {
+      return res.status(400).json({ 
+        error: 'Missing required fields: email, password, firstName, lastName, dateOfBirth, phoneNumber' 
+      });
+    }
 
     // Map the location fields to Address interface
     const addressObj = {
@@ -73,6 +93,7 @@ export async function register(req: Request, res: Response) {
       message: 'Registration successful'
     });
   } catch (error: any) {
+    console.error('Registration error:', error);
     res.status(400).json({ error: error.message });
   }
 }

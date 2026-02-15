@@ -1,5 +1,5 @@
 import { pool, testConnection, closePool } from './config';
-import { permissionRepository } from '../repositories/PermissionRepository';
+import { permissionRepository } from '../repositories';
 
 async function seed() {
   console.log('Starting database seeding...');

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Orthopedic's Care</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 { font-size: 24px; }
+        
+        .nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav a:hover { background: rgba(255,255,255,0.2); }
+        
+        .btn-logout {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .profile-header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .profile-info h2 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .profile-info p {
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .card h3 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .info-value {
+            color: #333;
+            text-align: right;
+        }
+        
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+        
+        .dependants-list {
+            margin-top: 15px;
+        }
+        
+        .dependant-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .dependant-item h4 {
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+        
+        .dependant-item p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav a, .btn-logout {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .info-value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>👤 My Profile</h1>
+            <nav class="nav">
+                <a href="/dashboard.html">Dashboard</a>
+                <a href="/patient-profile.html">Profile</a>
+                <a href="/appointments.html">Appointments</a>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            </nav>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-avatar" id="avatar">
+                JD
+            </div>
+            <div class="profile-info">
+                <h2 id="fullName">Loading...</h2>
+                <p id="email">email@example.com</p>
+                <p id="phoneNumber">+254 700 000 000</p>
+                <p style="margin-top: 10px;">
+                    <a href="/profile.html" class="btn btn-primary">Edit Profile</a>
+                </p>
+            </div>
+        </div>
+        
+        <div class="profile-grid">
+            <!-- Personal Information -->
+            <div class="card">
+                <h3>📋 Personal Information</h3>
+                <div class="info-row">
+                    <span class="info-label">First Name</span>
+                    <span class="info-value" id="firstName">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Last Name</span>
+                    <span class="info-value" id="lastName">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Date of Birth</span>
+                    <span class="info-value" id="dateOfBirth">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Gender</span>
+                    <span class="info-value" id="gender">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Marital Status</span>
+                    <span class="info-value" id="maritalStatus">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Occupation</span>
+                    <span class="info-value" id="occupation">-</span>
+                </div>
+            </div>
+            
+            <!-- Citizenship Information -->
+            <div class="card">
+                <h3>🆔 Citizenship Information</h3>
+                <div class="info-row">
+                    <span class="info-label">Citizenship</span>
+                    <span class="info-value" id="citizenship">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">ID Type</span>
+                    <span class="info-value" id="idType">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">ID Number</span>
+                    <span class="info-value" id="idNumber">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">KRA PIN</span>
+                    <span class="info-value" id="kraPin">-</span>
+                </div>
+            </div>
+            
+            <!-- Contact Information -->
+            <div class="card">
+                <h3>📞 Contact Information</h3>
+                <div class="info-row">
+                    <span class="info-label">Email</span>
+                    <span class="info-value" id="emailDetail">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Phone Number</span>
+                    <span class="info-value" id="phoneDetail">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Alternate Phone</span>
+                    <span class="info-value" id="alternatePhone">-</span>
+                </div>
+            </div>
+            
+            <!-- Location Information -->
+            <div class="card">
+                <h3>📍 Location Information</h3>
+                <div class="info-row">
+                    <span class="info-label">Country</span>
+                    <span class="info-value" id="country">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">County</span>
+                    <span class="info-value" id="county">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Constituency</span>
+                    <span class="info-value" id="constituency">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Ward</span>
+                    <span class="info-value" id="ward">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Physical Address</span>
+                    <span class="info-value" id="physicalAddress">-</span>
+                </div>
+            </div>
+            
+            <!-- Dependants -->
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>👨‍👩‍👧‍👦 Dependants</h3>
+                <div id="dependantsList" class="dependants-list">
+                    <p style="color: #999;">No dependants registered</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        
+        if (!token) {
+            window.location.href = '/login.html';
+        }
+        
+        // Initialize
+        async function loadProfile() {
+            // Try to load from localStorage first
+            let profileData = JSON.parse(localStorage.getItem('profileData') || '{}');
+            
+            // If no profile data in localStorage, try to fetch from API
+            if (!profileData || Object.keys(profileData).length === 0) {
+                try {
+                    const response = await fetch('/api/profile', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    
+                    if (response.ok) {
+                        const apiData = await response.json();
+                        // Map API data to profile format
+                        profileData = {
+                            firstName: apiData.firstName,
+                            lastName: apiData.lastName,
+                            email: apiData.email,
+                            phone: apiData.phoneNumber,
+                            dateOfBirth: apiData.dateOfBirth,
+                            gender: apiData.gender?.toLowerCase(),
+                            // Add other fields as they come from API
+                        };
+                    }
+                } catch (error) {
+                    console.error('Error fetching profile:', error);
+                }
+            }
+            
+            // If still no data, use demo data for testing
+            if (!profileData || Object.keys(profileData).length === 0) {
+                profileData = {
+                    citizenship: 'kenyan',
+                    idType: 'national_id',
+                    idNumber: '12345678',
+                    kraPin: 'A123456789Z',
+                    firstName: user.firstName || 'John',
+                    lastName: user.lastName || 'Doe',
+                    dateOfBirth: user.dateOfBirth || '1990-01-15',
+                    gender: 'male',
+                    maritalStatus: 'single',
+                    occupation: 'Software Developer',
+                    email: user.email || 'john.doe@example.com',
+                    phone: '+254 700 000 000',
+                    alternatePhone: '+254 711 000 000',
+                    country: 'Kenya',
+                    county: 'Nairobi',
+                    constituency: 'Westlands',
+                    ward: 'Kitisuru',
+                    address: '123 Main Street, Nairobi',
+                    dependants: []
+                };
+                console.log('Using demo profile data for display');
+            }
+            
+            displayProfile(profileData);
+        }
+        
+        function displayProfile(profileData) {
+            // Display basic info
+            if (user.firstName && user.lastName) {
+                const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
+                document.getElementById('avatar').textContent = initials;
+                document.getElementById('fullName').textContent = `${user.firstName} ${user.lastName}`;
+                document.getElementById('email').textContent = user.email || profileData.email || '-';
+                document.getElementById('phoneNumber').textContent = profileData.phone || user.phoneNumber || '-';
+            }
+            
+            // Personal Information
+            document.getElementById('firstName').textContent = user.firstName || profileData.firstName || '-';
+            document.getElementById('lastName').textContent = user.lastName || profileData.lastName || '-';
+            document.getElementById('dateOfBirth').textContent = formatDate(user.dateOfBirth || profileData.dateOfBirth);
+            document.getElementById('gender').textContent = formatGender(profileData.gender || user.gender);
+            document.getElementById('maritalStatus').textContent = formatMaritalStatus(profileData.maritalStatus);
+            document.getElementById('occupation').textContent = profileData.occupation || '-';
+            
+            // Citizenship Information
+            document.getElementById('citizenship').textContent = formatCitizenship(profileData.citizenship);
+            document.getElementById('idType').textContent = formatIdType(profileData.idType);
+            document.getElementById('idNumber').textContent = profileData.idNumber || '-';
+            document.getElementById('kraPin').textContent = profileData.kraPin || '-';
+            
+            // Contact Information
+            document.getElementById('emailDetail').textContent = user.email || profileData.email || '-';
+            document.getElementById('phoneDetail').textContent = profileData.phone || user.phoneNumber || '-';
+            document.getElementById('alternatePhone').textContent = profileData.alternatePhone || '-';
+            
+            // Location Information
+            document.getElementById('country').textContent = profileData.country || '-';
+            document.getElementById('county').textContent = profileData.county || '-';
+            document.getElementById('constituency').textContent = profileData.constituency || '-';
+            document.getElementById('ward').textContent = profileData.ward || '-';
+            document.getElementById('physicalAddress').textContent = profileData.address || '-';
+            
+            // Dependants
+            if (profileData.dependants && profileData.dependants.length > 0) {
+                const dependantsList = document.getElementById('dependantsList');
+                dependantsList.innerHTML = profileData.dependants.map(dep => `
+                    <div class="dependant-item">
+                        <h4>${dep.name}</h4>
+                        <p><strong>Relationship:</strong> ${formatRelationship(dep.relationship)}</p>
+                        <p><strong>Date of Birth:</strong> ${formatDate(dep.dateOfBirth)}</p>
+                        ${dep.idNumber ? `<p><strong>ID Number:</strong> ${dep.idNumber}</p>` : ''}
+                    </div>
+                `).join('');
+            }
+        }
+        
+        // Load profile on page load
+        loadProfile();
+        
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+        
+        function formatGender(gender) {
+            const genders = { male: 'Male', female: 'Female', other: 'Other' };
+            return genders[gender] || '-';
+        }
+        
+        function formatMaritalStatus(status) {
+            const statuses = {
+                single: 'Single',
+                married: 'Married',
+                divorced: 'Divorced',
+                widowed: 'Widowed'
+            };
+            return statuses[status] || '-';
+        }
+        
+        function formatCitizenship(citizenship) {
+            const types = {
+                kenyan: 'Kenyan Citizen',
+                foreign: 'Foreign National',
+                resident: 'Resident'
+            };
+            return types[citizenship] || '-';
+        }
+        
+        function formatIdType(idType) {
+            const types = {
+                national_id: 'National ID',
+                passport: 'Passport',
+                alien_id: 'Alien ID'
+            };
+            return types[idType] || '-';
+        }
+        
+        function formatRelationship(relationship) {
+            const relationships = {
+                spouse: 'Spouse',
+                child: 'Child',
+                parent: 'Parent',
+                sibling: 'Sibling',
+                other: 'Other'
+            };
+            return relationships[relationship] || relationship;
+        }
+        
+        async function logout() {
+            try {
+                await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+            
+            localStorage.removeItem('token');
+            localStorage.removeItem('sessionId');
+            localStorage.removeItem('user');
+            localStorage.removeItem('profileData');
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>

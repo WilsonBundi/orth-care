@@ -91,7 +91,7 @@ Orthopedic's Care is a specialized orthopedic clinic led by a qualified orthoped
 
 ### Prerequisites
 - Node.js 18+
-- PostgreSQL 14+
+- Firebase account (free tier available)
 - npm or yarn
 
 ### Installation
@@ -107,17 +107,15 @@ Orthopedic's Care is a specialized orthopedic clinic led by a qualified orthoped
    npm install
    ```
 
-3. **Setup database**:
-   ```bash
-   # Create database
-   psql -U postgres
-   CREATE DATABASE patient_portal;
-   \q
-
-   # Run migrations
-   psql -U postgres -d patient_portal -f src/db/schema.sql
-   psql -U postgres -d patient_portal -f src/db/schema_enterprise.sql
-   psql -U postgres -d patient_portal -f src/db/invoices_schema.sql
+3. **Setup Firebase Firestore**:
+   
+   See [FIREBASE_QUICK_START.txt](FIREBASE_QUICK_START.txt) for detailed setup instructions.
+   
+   Quick steps:
+   - Create Firebase project at https://console.firebase.google.com/
+   - Enable Firestore Database
+   - Get your Project ID
+   - Update `.env` with `FIREBASE_PROJECT_ID=your-project-id`
    ```
 
 4. **Configure environment**:
@@ -127,8 +125,8 @@ Orthopedic's Care is a specialized orthopedic clinic led by a qualified orthoped
    
    Edit `.env` with your settings:
    ```env
-   # Database
-   DATABASE_URL=postgresql://postgres:password@localhost:5432/patient_portal
+   # Firebase
+   FIREBASE_PROJECT_ID=your-firebase-project-id
 
    # Server
    PORT=3000
@@ -247,7 +245,7 @@ orth-care/
 ## 🛠️ Technology Stack
 
 - **Backend**: Node.js, TypeScript, Express.js
-- **Database**: PostgreSQL
+- **Database**: Firebase Firestore (NoSQL Cloud Database)
 - **Authentication**: JWT, bcrypt
 - **Security**: Helmet, CSRF protection
 - **Logging**: Winston

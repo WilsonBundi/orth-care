@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: orthopedic-care
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        generateValue: true
+      # Add your other environment variables in Render dashboard:
+      # - FIREBASE_SERVICE_ACCOUNT
+      # - FIREBASE_PROJECT_ID
+      # - SESSION_SECRET
+      # - JWT_SECRET
+      # - SENDGRID_API_KEY
+      # - SENDGRID_FROM_EMAIL
+      # - APP_URL
