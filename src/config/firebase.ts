@@ -20,8 +20,16 @@ export function initializeFirebase(): admin.firestore.Firestore {
 
   try {
     // Initialize Firebase Admin SDK
-    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-      // Option 1: Use service account JSON from environment variable
+    if (process.env.FIREBASE_SERVICE_ACCOUNT_BASE64) {
+      // Option 1: Use base64-encoded service account JSON (best for Render/Vercel)
+      const serviceAccountJson = Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_BASE64, 'base64').toString('utf-8');
+      const serviceAccount = JSON.parse(serviceAccountJson);
+      firebaseApp = admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+      });
+      console.log('🔥 Using Firebase service account from base64 environment variable');
+    } else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      // Option 2: Use service account JSON from environment variable
       const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
       firebaseApp = admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
