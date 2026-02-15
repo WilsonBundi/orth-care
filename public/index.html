@@ -1209,122 +1209,171 @@
             color: #999;
         }
 
-        /* Responsive */
+        /* Responsive - Mobile First Approach */
         @media (max-width: 768px) {
             body {
-                font-size: 16px;
+                font-size: 15px;
             }
             
+            /* Header */
             .header-content {
                 flex-direction: column;
-                gap: 15px;
+                gap: 12px;
                 text-align: center;
+                padding: 15px 10px;
             }
             
             .header-nav {
                 flex-direction: column;
                 width: 100%;
-                gap: 10px;
+                gap: 8px;
             }
             
             .header-nav a {
                 width: 100%;
                 text-align: center;
-                font-size: 16px;
-                padding: 10px 20px;
+                font-size: 15px;
+                padding: 12px 20px;
             }
 
             .site-title h1 {
-                font-size: 24px;
+                font-size: 20px;
             }
             
             .site-title p {
-                font-size: 14px;
+                font-size: 12px;
             }
 
+            /* Hero Section */
             .hero {
-                padding: 50px 20px;
+                padding: 40px 15px;
+                min-height: auto;
             }
 
             .hero h2 {
-                font-size: 2.2rem !important;
+                font-size: 2rem !important;
+                line-height: 1.3;
+                margin-bottom: 15px;
             }
 
             .hero p {
-                font-size: 1.2rem !important;
+                font-size: 1.1rem !important;
+                margin-bottom: 25px;
+                line-height: 1.5;
             }
 
             .hero-buttons {
                 flex-direction: column;
                 align-items: stretch;
+                gap: 12px;
             }
 
             .btn {
                 width: 100%;
-                font-size: 1.1rem;
-                padding: 16px 32px;
+                font-size: 1rem;
+                padding: 14px 28px;
             }
             
+            /* Sections */
             .features, .services, .cta {
-                padding: 50px 20px;
+                padding: 40px 15px;
+            }
+            
+            .section-title {
+                margin-bottom: 30px;
             }
             
             .section-title h2 {
-                font-size: 2.2rem !important;
+                font-size: 2rem !important;
+                margin-bottom: 10px;
             }
             
             .section-title p {
-                font-size: 1.1rem !important;
+                font-size: 1rem !important;
             }
             
-            .feature-card h3 {
-                font-size: 1.4rem;
-            }
-            
-            .feature-card p {
-                font-size: 1rem;
-            }
-            
-            .service-item h4 {
-                font-size: 1.3rem;
-            }
-            
-            .service-item p {
-                font-size: 1rem;
-            }
-            
-            .cta h2 {
-                font-size: 2.2rem !important;
-            }
-            
-            .cta p {
-                font-size: 1.1rem !important;
-            }
-            
-            .footer-section h3 {
-                font-size: 1.3rem;
-            }
-            
-            .footer-section a,
-            .footer-section p {
-                font-size: 0.95rem;
-            }
-            
-            .features-grid, .services-grid {
+            /* Feature Cards */
+            .features-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
             
+            .feature-card {
+                padding: 25px 20px;
+            }
+            
+            .feature-icon {
+                font-size: 40px;
+                margin-bottom: 15px;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.3rem;
+                margin-bottom: 10px;
+            }
+            
+            .feature-card p {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+            
+            /* Services */
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .service-item {
+                padding: 20px;
+            }
+            
+            .service-item h4 {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+            }
+            
+            .service-item p {
+                font-size: 0.95rem;
+            }
+            
+            /* CTA Section */
+            .cta h2 {
+                font-size: 2rem !important;
+                margin-bottom: 15px;
+            }
+            
+            .cta p {
+                font-size: 1rem !important;
+                margin-bottom: 25px;
+            }
+            
+            /* Footer */
             .footer-content {
                 grid-template-columns: 1fr;
                 gap: 30px;
+                padding: 40px 15px;
+            }
+            
+            .footer-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+            
+            .footer-section a,
+            .footer-section p {
+                font-size: 0.9rem;
+            }
+            
+            .footer-bottom {
+                padding: 20px 15px;
+                font-size: 0.85rem;
             }
 
             /* Mobile Image Sections */
             .section-with-image {
                 grid-template-columns: 1fr;
-                gap: 2rem;
-                margin-bottom: 4rem;
+                gap: 1.5rem;
+                margin-bottom: 3rem;
             }
 
             .section-with-image.reverse {
@@ -1332,62 +1381,112 @@
             }
 
             .section-image {
-                height: 300px;
+                height: 250px;
+                border-radius: 12px;
             }
 
             .section-content {
-                padding: 1rem;
+                padding: 0.5rem;
             }
 
             .section-content h3 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
+                margin-bottom: 12px;
             }
 
             .section-content p {
-                font-size: 1rem;
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            .section-content ul {
+                margin-top: 12px;
             }
 
             .section-content ul li {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
+                padding: 8px 0;
             }
         }
         
+        /* Extra Small Phones */
         @media (max-width: 480px) {
-            .logo {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .site-title h1 {
-                font-size: 18px;
-            }
-            
-            .site-title p {
-                font-size: 11px;
-            }
-            
-            .hero h2 {
-                font-size: 24px;
-            }
-            
-            .hero p {
+            body {
                 font-size: 14px;
             }
             
+            .logo {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .site-title h1 {
+                font-size: 16px;
+            }
+            
+            .site-title p {
+                font-size: 10px;
+            }
+            
+            .hero {
+                padding: 30px 12px;
+            }
+            
+            .hero h2 {
+                font-size: 1.6rem !important;
+            }
+            
+            .hero p {
+                font-size: 0.95rem !important;
+            }
+            
+            .btn {
+                font-size: 0.9rem;
+                padding: 12px 24px;
+            }
+            
             .section-title h2 {
-                font-size: 24px;
+                font-size: 1.6rem !important;
+            }
+            
+            .section-title p {
+                font-size: 0.9rem !important;
             }
             
             .feature-icon {
-                font-size: 36px;
+                font-size: 35px;
             }
             
             .feature-card h3 {
-                font-size: 18px;
+                font-size: 1.1rem;
+            }
+            
+            .feature-card p {
+                font-size: 0.85rem;
+            }
+            
+            .service-item h4 {
+                font-size: 1.05rem;
+            }
+            
+            .service-item p {
+                font-size: 0.85rem;
             }
             
             .cta h2 {
-                font-size: 28px;
+                font-size: 1.6rem !important;
+            }
+            
+            .cta p {
+                font-size: 0.9rem !important;
+            }
+            
+            .section-image {
+                height: 200px;
+            }
+            
+            .section-content h3 {
+                font-size: 1.3rem;
             }
         }
         
