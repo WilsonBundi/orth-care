@@ -18,12 +18,8 @@ export const securityHeaders = helmet({
 });
 
 export function httpsRedirect(req: Request, res: Response, next: NextFunction) {
-  // Check if behind a proxy (like Render, Heroku, etc.)
-  const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
-  
-  if (process.env.NODE_ENV === 'production' && !isSecure) {
-    return res.redirect(301, `https://${req.headers.host}${req.url}`);
-  }
+  // Render and most cloud platforms handle HTTPS at the load balancer level
+  // No need to redirect - just pass through
   next();
 }
 
