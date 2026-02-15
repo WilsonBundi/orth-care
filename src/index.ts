@@ -22,6 +22,9 @@ dotenv.config();
 const app: any = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust proxy - required for Render, Heroku, and other platforms
+app.set('trust proxy', 1);
+
 // Initialize Firebase
 initializeFirebase();
 
