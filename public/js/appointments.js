@@ -53,8 +53,17 @@ function setupEventListeners() {
 }
 
 function setMinDate() {
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('appointmentDate').setAttribute('min', today);
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+    
+    // Set max date to 1 year from now
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    const maxDateStr = maxDate.toISOString().split('T')[0];
+    
+    const dateInput = document.getElementById('appointmentDate');
+    dateInput.setAttribute('min', todayStr);
+    dateInput.setAttribute('max', maxDateStr);
 }
 
 function loadDoctors(specialty) {
