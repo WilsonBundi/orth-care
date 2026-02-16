@@ -1,13 +1,15 @@
 import { Router, type Router as ExpressRouter } from 'express';
 import { invoiceController } from '../controllers/invoiceController';
 import { authenticate } from '../middleware/auth';
+import { requireRole } from '../middleware/roleCheck';
 import { apiRateLimiter } from '../middleware/rateLimiting';
 
 const router: ExpressRouter = Router();
 
-// All routes require authentication
+// All routes require authentication and admin role
 router.use(authenticate);
 router.use(apiRateLimiter);
+router.use(requireRole('admin'));
 
 // Get my invoices
 router.get('/my-invoices', invoiceController.getMyInvoices.bind(invoiceController));

@@ -443,7 +443,18 @@
     
     <script>
         const token = localStorage.getItem('token');
-        if (!token) window.location.href = '/login.html';
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        
+        // Check authentication
+        if (!token) {
+            window.location.href = '/login.html';
+        }
+        
+        // Check admin role
+        if (user.role !== 'admin') {
+            alert('Access denied: This page is restricted to administrators only');
+            window.location.href = '/dashboard.html';
+        }
         
         let selectedFiles = [];
         let allRecords = [];

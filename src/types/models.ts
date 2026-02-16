@@ -29,6 +29,7 @@ export enum AuditEventType {
   PASSWORD_CHANGED = 'password_changed',
   PROFILE_UPDATED = 'profile_updated',
   ACCESS_DENIED = 'access_denied',
+  ACCESS_GRANTED = 'access_granted',
   ACCOUNT_LOCKED = 'account_locked',
   // MFA events
   MFA_SETUP = 'mfa_setup',

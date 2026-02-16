@@ -7,7 +7,9 @@ import { authorize } from '../middleware/authorization';
 import mfaRoutes from './mfa';
 import appointmentRoutes from './appointments';
 import invoiceRoutes from './invoiceRoutes';
+import fileRoutes from './fileRoutes';
 import passwordResetRoutes from './passwordReset';
+import adminRoutes from './adminRoutes';
 import { globalRateLimiter, authRateLimiter } from '../middleware/rateLimiting';
 
 const router: any = Router();
@@ -37,7 +39,13 @@ router.get('/dashboard', authenticate, authorize('read', 'dashboard'), getDashbo
 // Appointment routes
 router.use('/appointments', appointmentRoutes);
 
-// Invoice routes
+// Invoice routes (admin only)
 router.use('/invoices', invoiceRoutes);
+
+// File routes for medical records (admin only)
+router.use('/files', fileRoutes);
+
+// Admin routes (admin only)
+router.use('/admin', adminRoutes);
 
 export default router;

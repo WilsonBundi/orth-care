@@ -7,6 +7,12 @@ if (!token) {
     window.location.href = '/login.html';
 }
 
+// Check admin role
+if (user.role !== 'admin') {
+    alert('Access denied: This page is restricted to administrators only');
+    window.location.href = '/dashboard.html';
+}
+
 let allInvoices = [];
 let currentInvoice = null;
 let selectedPaymentMethod = null;
