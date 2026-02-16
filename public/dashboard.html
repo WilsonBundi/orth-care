@@ -183,49 +183,13 @@
         // Add role-specific cards based on user level
         const cardsContainer = document.getElementById('dashboardCards');
         
-        // Clinical staff cards (Nurse level and above)
+        // Admin/Staff users - show link to admin portal
         if (userLevel >= roleLevel.nurse) {
-            const clinicalCards = `
-                <div class="card">
-                    <h3>📋 Medical Records</h3>
-                    <p>View and manage patient medical history, treatment records, and reports</p>
-                    <a href="/medical-records.html">Manage Records</a>
-                </div>
-            `;
-            cardsContainer.insertAdjacentHTML('beforeend', clinicalCards);
-        }
-        
-        // Billing staff cards (Billing Clerk level and above)
-        if (userLevel >= roleLevel.billing_clerk) {
-            const billingCards = `
-                <div class="card">
-                    <h3>💰 Billing & Invoices</h3>
-                    <p>Create invoices, process payments, and manage patient billing</p>
-                    <a href="/billing.html">Manage Billing</a>
-                </div>
-            `;
-            cardsContainer.insertAdjacentHTML('beforeend', billingCards);
-        }
-        
-        // Management cards (Clinic Manager level and above)
-        if (userLevel >= roleLevel.clinic_manager) {
-            const managementCards = `
-                <div class="card">
-                    <h3>📊 Reports & Analytics</h3>
-                    <p>View clinic performance, financial reports, and operational metrics</p>
-                    <a href="/reports.html">View Reports</a>
-                </div>
-            `;
-            cardsContainer.insertAdjacentHTML('beforeend', managementCards);
-        }
-        
-        // System administration cards (System Admin level and above)
-        if (userLevel >= roleLevel.system_admin) {
             const adminCards = `
                 <div class="card">
-                    <h3>⚙️ System Administration</h3>
-                    <p>Manage system settings, users, and technical configuration</p>
-                    <a href="/admin-dashboard.html">Admin Portal</a>
+                    <h3>⚙️ Admin Portal</h3>
+                    <p>Access medical records and billing management</p>
+                    <a href="/admin-dashboard.html">Go to Admin Portal</a>
                 </div>
             `;
             cardsContainer.insertAdjacentHTML('beforeend', adminCards);
