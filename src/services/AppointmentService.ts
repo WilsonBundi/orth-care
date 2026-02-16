@@ -1,4 +1,4 @@
-import { pool } from '../db/config';
+import { db } from '../config/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface Appointment {
@@ -14,6 +14,8 @@ export interface Appointment {
   reason?: string;
   notes?: string;
   symptoms?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface CreateAppointmentInput {
@@ -28,121 +30,95 @@ export interface CreateAppointmentInput {
 }
 
 export class AppointmentService {
+  private collection = db.collection('appointments');
+
   async createAppointment(input: CreateAppointmentInput): Promise<Appointment> {
     const id = uuidv4();
     const durationMinutes = this.calculateDuration(input.startTime, input.endTime);
 
-    const result = await pool.query(
-      `INSERT INTO appointments (
-        id, patient_id, doctor_id, appointment_date, start_time, end_time,
-        duration_minutes, appointment_type, reason, symptoms, status
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'scheduled')
-      RETURNING *`,
-      [
-        id,
-        input.patientId,
-        input.doctorId,
-        input.appointmentDate,
-        input.startTime,
-        input.endTime,
-        durationMinutes,
-        input.appointmentType,
-        input.reason,
-        input.symptoms,
-      ]
-    );
+    const appointment: Appointment = {
+      id,
+      patientId: input.patientId,
+      doctorId: input.doctorId,
+      appointmentDate: input.appointmentDate,
+      startTime: input.startTime,
+      endTime: input.endTime,
+      durationMinutes,
+      appointmentType: input.appointmentType,
+      reason: input.reason,
+      symptoms: input.symptoms,
+      status: 'scheduled',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
 
-    return this.mapToAppointment(result.rows[0]);
+    await this.collection.doc(id).set(appointment);
+    return appointment;
   }
 
   async getAppointment(id: string): Promise<Appointment | null> {
-    const result = await pool.query(
-      'SELECT * FROM appointments WHERE id = $1',
-      [id]
-    );
-
-    if (result.rows.length === 0) return null;
-    return this.mapToAppointment(result.rows[0]);
+    const doc = await this.collection.doc(id).get();
+    if (!doc.exists) return null;
+    return doc.data() as Appointment;
   }
 
   async getPatientAppointments(patientId: string): Promise<Appointment[]> {
-    const result = await pool.query(
-      `SELECT * FROM appointments 
-       WHERE patient_id = $1 
-       ORDER BY appointment_date DESC, start_time DESC`,
-      [patientId]
-    );
+    const snapshot = await this.collection
+      .where('patientId', '==', patientId)
+      .orderBy('appointmentDate', 'desc')
+      .get();
 
-    return result.rows.map(row => this.mapToAppointment(row));
+    return snapshot.docs.map(doc => doc.data() as Appointment);
   }
 
   async getDoctorAppointments(doctorId: string, date?: Date): Promise<Appointment[]> {
-    let query = 'SELECT * FROM appointments WHERE doctor_id = $1';
-    const params: any[] = [doctorId];
+    let query = this.collection.where('doctorId', '==', doctorId);
 
     if (date) {
-      query += ' AND appointment_date = $2';
-      params.push(date);
+      query = query.where('appointmentDate', '==', date);
     }
 
-    query += ' ORDER BY appointment_date, start_time';
-
-    const result = await pool.query(query, params);
-    return result.rows.map(row => this.mapToAppointment(row));
+    const snapshot = await query.orderBy('appointmentDate').orderBy('startTime').get();
+    return snapshot.docs.map(doc => doc.data() as Appointment);
   }
 
   async getUpcomingAppointments(userId: string, role: string): Promise<Appointment[]> {
-    const field = role === 'doctor' ? 'doctor_id' : 'patient_id';
-    
-    const result = await pool.query(
-      `SELECT * FROM appointments 
-       WHERE ${field} = $1 
-       AND appointment_date >= CURRENT_DATE
-       AND status IN ('scheduled', 'confirmed')
-       ORDER BY appointment_date, start_time
-       LIMIT 10`,
-      [userId]
-    );
+    const field = role === 'doctor' ? 'doctorId' : 'patientId';
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    return result.rows.map(row => this.mapToAppointment(row));
+    const snapshot = await this.collection
+      .where(field, '==', userId)
+      .where('appointmentDate', '>=', today)
+      .where('status', 'in', ['scheduled', 'confirmed'])
+      .orderBy('appointmentDate')
+      .orderBy('startTime')
+      .limit(10)
+      .get();
+
+    return snapshot.docs.map(doc => doc.data() as Appointment);
   }
 
   async updateAppointment(id: string, updates: Partial<Appointment>): Promise<Appointment> {
-    const fields: string[] = [];
-    const values: any[] = [];
-    let paramCount = 1;
+    const updateData = {
+      ...updates,
+      updatedAt: new Date()
+    };
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value !== undefined) {
-        fields.push(`${this.camelToSnake(key)} = $${paramCount}`);
-        values.push(value);
-        paramCount++;
-      }
-    });
-
-    values.push(id);
-
-    const result = await pool.query(
-      `UPDATE appointments 
-       SET ${fields.join(', ')}, updated_at = CURRENT_TIMESTAMP
-       WHERE id = $${paramCount}
-       RETURNING *`,
-      values
-    );
-
-    return this.mapToAppointment(result.rows[0]);
+    await this.collection.doc(id).update(updateData);
+    
+    const doc = await this.collection.doc(id).get();
+    return doc.data() as Appointment;
   }
 
   async cancelAppointment(id: string, cancelledBy: string, reason?: string): Promise<void> {
-    await pool.query(
-      `UPDATE appointments 
-       SET status = 'cancelled',
-           cancelled_by = $1,
-           cancelled_at = CURRENT_TIMESTAMP,
-           cancellation_reason = $2
-       WHERE id = $3`,
-      [cancelledBy, reason, id]
-    );
+    await this.collection.doc(id).update({
+      status: 'cancelled',
+      cancelledBy,
+      cancelledAt: new Date(),
+      cancellationReason: reason,
+      updatedAt: new Date()
+    });
   }
 
   async rescheduleAppointment(
@@ -153,19 +129,16 @@ export class AppointmentService {
   ): Promise<Appointment> {
     const durationMinutes = this.calculateDuration(newStartTime, newEndTime);
 
-    const result = await pool.query(
-      `UPDATE appointments 
-       SET appointment_date = $1,
-           start_time = $2,
-           end_time = $3,
-           duration_minutes = $4,
-           updated_at = CURRENT_TIMESTAMP
-       WHERE id = $5
-       RETURNING *`,
-      [newDate, newStartTime, newEndTime, durationMinutes, id]
-    );
+    await this.collection.doc(id).update({
+      appointmentDate: newDate,
+      startTime: newStartTime,
+      endTime: newEndTime,
+      durationMinutes,
+      updatedAt: new Date()
+    });
 
-    return this.mapToAppointment(result.rows[0]);
+    const doc = await this.collection.doc(id).get();
+    return doc.data() as Appointment;
   }
 
   async getAvailableSlots(doctorId: string, date: Date): Promise<string[]> {
@@ -185,24 +158,23 @@ export class AppointmentService {
   }
 
   async markAsCompleted(id: string, notes?: string): Promise<void> {
-    await pool.query(
-      `UPDATE appointments 
-       SET status = 'completed',
-           notes = COALESCE($1, notes),
-           updated_at = CURRENT_TIMESTAMP
-       WHERE id = $2`,
-      [notes, id]
-    );
+    const updateData: any = {
+      status: 'completed',
+      updatedAt: new Date()
+    };
+
+    if (notes) {
+      updateData.notes = notes;
+    }
+
+    await this.collection.doc(id).update(updateData);
   }
 
   async markAsNoShow(id: string): Promise<void> {
-    await pool.query(
-      `UPDATE appointments 
-       SET status = 'no_show',
-           updated_at = CURRENT_TIMESTAMP
-       WHERE id = $1`,
-      [id]
-    );
+    await this.collection.doc(id).update({
+      status: 'no_show',
+      updatedAt: new Date()
+    });
   }
 
   private calculateDuration(startTime: string, endTime: string): number {
@@ -213,27 +185,6 @@ export class AppointmentService {
     const endMinutes = endHour * 60 + endMin;
     
     return endMinutes - startMinutes;
-  }
-
-  private camelToSnake(str: string): string {
-    return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
-  }
-
-  private mapToAppointment(row: any): Appointment {
-    return {
-      id: row.id,
-      patientId: row.patient_id,
-      doctorId: row.doctor_id,
-      appointmentDate: row.appointment_date,
-      startTime: row.start_time,
-      endTime: row.end_time,
-      durationMinutes: row.duration_minutes,
-      status: row.status,
-      appointmentType: row.appointment_type,
-      reason: row.reason,
-      notes: row.notes,
-      symptoms: row.symptoms,
-    };
   }
 }
 
