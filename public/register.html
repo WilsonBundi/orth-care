@@ -776,10 +776,8 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="ward">Ward <span class="required">*</span></label>
-                        <select id="ward" name="ward" required disabled>
-                            <option value="">Select constituency first</option>
-                        </select>
+                        <label for="ward">Ward/Sub-location</label>
+                        <input type="text" id="ward" name="ward" placeholder="Enter your ward or sub-location (optional)">
                         <div id="wardError" class="field-error"></div>
                     </div>
                     
@@ -1165,10 +1163,7 @@
                         window.showFieldError('constituency', 'Constituency is required');
                         isValid = false;
                     }
-                    if (!document.getElementById('ward').value) {
-                        window.showFieldError('ward', 'Ward is required');
-                        isValid = false;
-                    }
+                    // Ward is optional
                     if (!document.getElementById('address').value.trim()) {
                         window.showFieldError('address', 'Physical address is required');
                         isValid = false;
@@ -1471,5 +1466,8 @@
             }
         });
     </script>
+    
+    <!-- Location Data Loader -->
+    <script src="/js/location-loader.js"></script>
 </body>
 </html>
