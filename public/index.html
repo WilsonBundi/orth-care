@@ -548,96 +548,7 @@
             opacity: 0.4;
         }
 
-        /* Individual Feature Sections - Professional Landing Page Style */
-        .section-with-image {
-            display: block;
-            max-width: 1200px;
-            margin: 0 auto 120px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-            position: relative;
-            z-index: 2;
-        }
 
-        .section-with-image.reverse {
-            direction: ltr;
-        }
-
-        .section-image {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            overflow: hidden;
-        }
-
-        .section-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-
-        .section-content {
-            padding: 48px 60px;
-            background: white;
-        }
-
-        .section-content h3 {
-            font-family: 'Inter', sans-serif;
-            font-size: 2rem;
-            color: #1a202c;
-            margin-bottom: 1.25rem;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        .section-content p {
-            font-size: 1.0625rem;
-            color: #4a5568;
-            line-height: 1.75;
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-        }
-
-        .section-content ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .section-content ul li {
-            font-size: 0.9375rem;
-            color: #4a5568;
-            padding-left: 2rem;
-            position: relative;
-            line-height: 1.6;
-            font-weight: 400;
-        }
-
-        .section-content ul li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 22px;
-            height: 22px;
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.75rem;
-            line-height: 22px;
-            text-align: center;
-        }
 
         .container {
             max-width: 1400px;
@@ -861,33 +772,7 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        /* Services Section Image Styling */
-        .services .section-with-image {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
-        }
 
-        .services .section-content {
-            background: transparent;
-        }
-
-        .services .section-content h3 {
-            color: white;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .services .section-content p {
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        .services .section-content ul li {
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        .services .section-content ul li::before {
-            background: white;
-            color: #667eea;
-        }
 
         .services-grid {
             display: grid;
@@ -1401,53 +1286,7 @@
                 font-size: 14px;
             }
 
-            /* Mobile Individual Sections */
-            .section-with-image {
-                margin-bottom: 60px;
-                border-radius: 12px;
-            }
 
-            .section-image {
-                height: 280px;
-            }
-
-            .section-content {
-                padding: 32px 24px;
-            }
-
-            .section-content h3 {
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
-                line-height: 1.25;
-                font-weight: 700;
-                color: #1a202c;
-            }
-
-            .section-content p {
-                font-size: 1rem;
-                line-height: 1.65;
-                margin-bottom: 1.25rem;
-                color: #4a5568;
-            }
-
-            .section-content ul {
-                grid-template-columns: 1fr;
-                gap: 0.875rem;
-            }
-
-            .section-content ul li {
-                font-size: 0.9375rem;
-                padding-left: 2rem;
-                line-height: 1.5;
-                color: #4a5568;
-            }
-            
-            .section-content ul li::before {
-                width: 20px;
-                height: 20px;
-                font-size: 0.7rem;
-                line-height: 20px;
-            }
         }
         
         /* Extra Small Phones - Minimum Readable Sizes */
@@ -1532,45 +1371,7 @@
                 font-size: 15px !important;
             }
             
-            .section-with-image {
-                margin-bottom: 48px;
-                border-radius: 10px;
-            }
-            
-            .section-image {
-                height: 240px;
-            }
-            
-            .section-content {
-                padding: 24px 20px;
-            }
-            
-            .section-content h3 {
-                font-size: 1.375rem;
-                margin-bottom: 0.875rem;
-            }
-            
-            .section-content p {
-                font-size: 0.9375rem;
-                line-height: 1.6;
-                margin-bottom: 1rem;
-            }
-            
-            .section-content ul {
-                gap: 0.75rem;
-            }
-            
-            .section-content ul li {
-                font-size: 0.875rem;
-                padding-left: 1.875rem;
-            }
-            
-            .section-content ul li::before {
-                width: 18px;
-                height: 18px;
-                font-size: 0.65rem;
-                line-height: 18px;
-            }
+
             
             .footer-section h3 {
                 font-size: 17px;
@@ -1582,13 +1383,7 @@
             }
         }
             
-            .section-image {
-                height: 200px;
-            }
-            
-            .section-content h3 {
-                font-size: 1.3rem;
-            }
+
         }
         
         @media (min-width: 769px) and (max-width: 1024px) {
@@ -1647,62 +1442,26 @@
                 <p>Expert orthopedic care with comprehensive digital health management</p>
             </div>
 
-            <!-- Feature Section 1: Expert Care -->
-            <div class="section-with-image">
-                <div class="section-image">
-                    <img src="/images/doctor-consultation.jpg" alt="Orthopedic Doctor Consultation" loading="lazy">
-                </div>
-                <div class="section-content">
-                    <h3>Expert Orthopedic Care</h3>
-                    <p>Our qualified orthopedic doctor provides specialized treatment for all bone, joint, and muscle conditions with years of experience and cutting-edge techniques.</p>
-                    <ul>
-                        <li>Board-certified orthopedic specialist</li>
-                        <li>Advanced diagnostic capabilities</li>
-                        <li>Personalized treatment plans</li>
-                        <li>Comprehensive rehabilitation programs</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Feature Section 2: Modern Facilities -->
-            <div class="section-with-image reverse">
-                <div class="section-image">
-                    <img src="/images/medical-facility.jpg" alt="Modern Medical Facility" loading="lazy">
-                </div>
-                <div class="section-content">
-                    <h3>State-of-the-Art Facilities</h3>
-                    <p>Our clinic is equipped with the latest medical technology and modern facilities to ensure you receive the best possible care in a comfortable environment.</p>
-                    <ul>
-                        <li>Advanced imaging and diagnostics</li>
-                        <li>Modern surgical equipment</li>
-                        <li>Comfortable recovery rooms</li>
-                        <li>Hygienic and safe environment</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Feature Section 3: Digital Health -->
-            <div class="section-with-image">
-                <div class="section-image">
-                    <img src="/images/digital-health.jpg" alt="Digital Health Management" loading="lazy">
-                </div>
-                <div class="section-content">
-                    <h3>Digital Health Management</h3>
-                    <p>Book appointments, manage your profile, and communicate with your doctor through our secure online portal anytime, anywhere.</p>
-                    <ul>
-                        <li>24/7 online appointment booking</li>
-                        <li>Easy appointment scheduling</li>
-                        <li>Secure messaging with doctor</li>
-                        <li>Profile and dependant management</li>
-                    </ul>
-                </div>
-            </div>
-
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-calendar-check"></i></div>
                     <h3>Easy Appointments</h3>
                     <p>Book consultations with our qualified orthopedic doctor online. Get instant confirmation and appointment reminders.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-md"></i></div>
+                    <h3>Expert Orthopedic Care</h3>
+                    <p>Board-certified orthopedic specialist providing personalized treatment plans with advanced diagnostic capabilities and comprehensive rehabilitation programs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-hospital"></i></div>
+                    <h3>Modern Facilities</h3>
+                    <p>State-of-the-art clinic equipped with advanced imaging, modern surgical equipment, and comfortable recovery rooms in a hygienic environment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-laptop-medical"></i></div>
+                    <h3>Digital Health Portal</h3>
+                    <p>24/7 online appointment booking, secure messaging with your doctor, and easy profile and dependant management from anywhere.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-user-circle"></i></div>
@@ -1741,68 +1500,35 @@
                 <p>Comprehensive care for all your musculoskeletal needs</p>
             </div>
 
-            <!-- Service Section 1: Joint Replacement -->
-            <div class="section-with-image">
-                <div class="section-image">
-                    <img src="/images/joint-pain.jpg" alt="Joint Pain Treatment" loading="lazy">
-                </div>
-                <div class="section-content">
-                    <h3><i class="fas fa-bone"></i> Joint Replacement Excellence</h3>
-                    <p>Our advanced joint replacement procedures restore mobility and eliminate pain using the latest surgical techniques and prosthetic technology.</p>
-                    <ul>
-                        <li>Hip and knee replacement surgery</li>
-                        <li>Shoulder and elbow procedures</li>
-                        <li>Minimally invasive techniques</li>
-                        <li>Fast recovery protocols</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Service Section 2: Sports Medicine -->
-            <div class="section-with-image reverse">
-                <div class="section-image">
-                    <img src="/images/knee-pain.jpg" alt="Sports Medicine Treatment" loading="lazy">
-                </div>
-                <div class="section-content">
-                    <h3><i class="fas fa-running"></i> Sports Medicine & Performance</h3>
-                    <p>Specialized treatment for athletes and active individuals, helping you return to peak performance safely and quickly.</p>
-                    <ul>
-                        <li>ACL and ligament reconstruction</li>
-                        <li>Rotator cuff repair</li>
-                        <li>Arthroscopic procedures</li>
-                        <li>Performance optimization</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Service Section 3: Pain Management -->
-            <div class="section-with-image">
-                <div class="section-image">
-                    <img src="/images/shoulder-pain.jpg" alt="Pain Management" loading="lazy">
-                </div>
-                <div class="section-content">
-                    <h3><i class="fas fa-hand-holding-medical"></i> Comprehensive Pain Management</h3>
-                    <p>Advanced pain management techniques to help you live pain-free and improve your quality of life.</p>
-                    <ul>
-                        <li>Non-surgical pain relief options</li>
-                        <li>Injection therapy</li>
-                        <li>Physical therapy programs</li>
-                        <li>Chronic pain management</li>
-                    </ul>
-                </div>
-            </div>
-
             <div class="services-grid">
                 <div class="service-item">
                     <h4><i class="fas fa-bone"></i> Joint Replacement</h4>
-                    <p>Advanced hip, knee, and shoulder replacement procedures with cutting-edge technology</p>
+                    <p>Advanced hip, knee, and shoulder replacement procedures with cutting-edge technology and minimally invasive techniques</p>
                 </div>
                 <div class="service-item">
                     <h4><i class="fas fa-running"></i> Sports Medicine</h4>
-                    <p>Comprehensive treatment for sports injuries and athletic performance optimization</p>
+                    <p>Comprehensive treatment for sports injuries, ACL reconstruction, and athletic performance optimization</p>
+                </div>
+                <div class="service-item">
+                    <h4><i class="fas fa-hand-holding-medical"></i> Pain Management</h4>
+                    <p>Advanced pain relief options including injection therapy, physical therapy, and chronic pain management</p>
                 </div>
                 <div class="service-item">
                     <h4><i class="fas fa-ambulance"></i> Trauma Care</h4>
+                    <p>Emergency orthopedic treatment for fractures, dislocations, and acute injuries</p>
+                </div>
+                <div class="service-item">
+                    <h4><i class="fas fa-spine"></i> Spine Care</h4>
+                    <p>Comprehensive spine treatment, surgery, and rehabilitation programs</p>
+                </div>
+                <div class="service-item">
+                    <h4><i class="fas fa-child"></i> Pediatric Orthopedics</h4>
+                    <p>Specialized care for children's bone and joint conditions with gentle approach</p>
+                </div>
+                <div class="service-item">
+                    <h4><i class="fas fa-dumbbell"></i> Physical Therapy</h4>
+                    <p>Professional rehabilitation and recovery programs for optimal healing</p>
+                </div>
                     <p>Emergency treatment for fractures and acute orthopedic injuries</p>
                 </div>
                 <div class="service-item">
