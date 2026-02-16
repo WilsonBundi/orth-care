@@ -23,11 +23,21 @@ const roleLevel = {
 
 const userLevel = roleLevel[user.role] || 1;
 const requiredLevel = roleLevel.billing_clerk; // Minimum BILLING_CLERK role required
+const isAdmin = userLevel >= requiredLevel;
 
 // Check if user has sufficient role level
 if (userLevel < requiredLevel) {
     alert('Access denied: This page requires billing staff privileges (Billing Clerk level or higher)');
     window.location.href = '/dashboard.html';
+}
+
+// Show appropriate UI based on role
+if (isAdmin) {
+    document.getElementById('adminStatsCard').style.display = 'block';
+    document.getElementById('patientBalanceCard').style.display = 'none';
+} else {
+    document.getElementById('adminStatsCard').style.display = 'none';
+    document.getElementById('patientBalanceCard').style.display = 'block';
 }
 
 let allInvoices = [];
@@ -139,9 +149,28 @@ function displayInvoices() {
     displayInvoiceList('outstandingInvoicesList', outstanding);
     displayInvoiceList('paidInvoicesList', paid);
     
-    // Update outstanding balance
+    // Update stats
     const totalOutstanding = outstanding.reduce((sum, inv) => sum + inv.balanceDue, 0);
-    document.getElementById('outstandingBalance').textContent = `KES ${formatCurrency(totalOutstanding)}`;
+    
+    if (isAdmin) {
+        // Admin stats
+        document.getElementById('totalOutstanding').textContent = `KES ${formatCurrency(totalOutstanding)}`;
+        document.getElementById('totalInvoices').textContent = all.length;
+        
+        // Calculate monthly revenue (paid this month)
+        const thisMonth = new Date().getMonth();
+        const thisYear = new Date().getFullYear();
+        const monthlyRevenue = paid
+            .filter(inv => {
+                const paidDate = new Date(inv.paidAt);
+                return paidDate.getMonth() === thisMonth && paidDate.getFullYear() === thisYear;
+            })
+            .reduce((sum, inv) => sum + inv.totalAmount, 0);
+        document.getElementById('monthlyRevenue').textContent = `KES ${formatCurrency(monthlyRevenue)}`;
+    } else {
+        // Patient balance
+        document.getElementById('outstandingBalance').textContent = `KES ${formatCurrency(totalOutstanding)}`;
+    }
 }
 
 function displayInvoiceList(containerId, invoices) {
@@ -177,7 +206,12 @@ function displayInvoiceList(containerId, invoices) {
                 </div>
                 <div class="invoice-actions">
                     <button class="btn btn-secondary" onclick="viewInvoice('${invoice.id}')">View Details</button>
-                    ${invoice.balanceDue > 0 ? `<button class="btn btn-success" onclick="payInvoice('${invoice.id}')">Pay Now</button>` : ''}
+                    ${isAdmin ? `
+                        <button class="btn btn-primary" onclick="editInvoice('${invoice.id}')">Edit</button>
+                        ${invoice.balanceDue > 0 ? `<button class="btn btn-success" onclick="recordPayment('${invoice.id}')">Record Payment</button>` : ''}
+                    ` : `
+                        ${invoice.balanceDue > 0 ? `<button class="btn btn-success" onclick="payInvoice('${invoice.id}')">Pay Now</button>` : ''}
+                    `}
                 </div>
             </div>
         `;
@@ -459,3 +493,158 @@ async function logout() {
     localStorage.removeItem('profileData');
     window.location.href = '/login.html';
 }
+
+// Admin Functions
+function showCreateInvoiceModal() {
+    document.getElementById('createInvoiceModal').classList.add('active');
+    updateInvoiceTotal();
+}
+
+function closeCreateInvoiceModal() {
+    document.getElementById('createInvoiceModal').classList.remove('active');
+    // Reset form
+    document.getElementById('patientSelect').value = '';
+    document.getElementById('invoiceDueDate').value = '';
+    document.getElementById('invoiceItems').innerHTML = `
+        <div class="invoice-item-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 10px;">
+            <input type="text" placeholder="Description" class="item-description" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+            <input type="number" placeholder="Qty" class="item-quantity" value="1" min="1" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+            <input type="number" placeholder="Price" class="item-price" min="0" step="0.01" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+            <button type="button" onclick="removeInvoiceItem(this)" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 8px; cursor: pointer;">×</button>
+        </div>
+    `;
+}
+
+function addInvoiceItem() {
+    const container = document.getElementById('invoiceItems');
+    const newRow = document.createElement('div');
+    newRow.className = 'invoice-item-row';
+    newRow.style.cssText = 'display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 10px;';
+    newRow.innerHTML = `
+        <input type="text" placeholder="Description" class="item-description" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+        <input type="number" placeholder="Qty" class="item-quantity" value="1" min="1" onchange="updateInvoiceTotal()" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+        <input type="number" placeholder="Price" class="item-price" min="0" step="0.01" onchange="updateInvoiceTotal()" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+        <button type="button" onclick="removeInvoiceItem(this)" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 8px; cursor: pointer;">×</button>
+    `;
+    container.appendChild(newRow);
+}
+
+function removeInvoiceItem(button) {
+    const rows = document.querySelectorAll('.invoice-item-row');
+    if (rows.length > 1) {
+        button.closest('.invoice-item-row').remove();
+        updateInvoiceTotal();
+    } else {
+        alert('At least one item is required');
+    }
+}
+
+function updateInvoiceTotal() {
+    const rows = document.querySelectorAll('.invoice-item-row');
+    let total = 0;
+    
+    rows.forEach(row => {
+        const qty = parseFloat(row.querySelector('.item-quantity').value) || 0;
+        const price = parseFloat(row.querySelector('.item-price').value) || 0;
+        total += qty * price;
+    });
+    
+    document.getElementById('invoiceTotal').textContent = formatCurrency(total);
+}
+
+async function createInvoice() {
+    const patient = document.getElementById('patientSelect').value;
+    const dueDate = document.getElementById('invoiceDueDate').value;
+    
+    if (!patient) {
+        alert('Please enter patient name or ID');
+        return;
+    }
+    
+    if (!dueDate) {
+        alert('Please select due date');
+        return;
+    }
+    
+    const rows = document.querySelectorAll('.invoice-item-row');
+    const items = [];
+    
+    rows.forEach(row => {
+        const description = row.querySelector('.item-description').value;
+        const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
+        const unitPrice = parseFloat(row.querySelector('.item-price').value) || 0;
+        
+        if (description && quantity > 0 && unitPrice > 0) {
+            items.push({ description, quantity, unitPrice });
+        }
+    });
+    
+    if (items.length === 0) {
+        alert('Please add at least one valid item');
+        return;
+    }
+    
+    const totalAmount = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    
+    // Create invoice (demo mode - add to local array)
+    const newInvoice = {
+        id: `${allInvoices.length + 1}`,
+        invoiceNumber: `INV-${String(allInvoices.length + 1).padStart(6, '0')}`,
+        issueDate: new Date().toISOString().split('T')[0],
+        dueDate: dueDate,
+        totalAmount: totalAmount,
+        paidAmount: 0,
+        balanceDue: totalAmount,
+        status: 'pending',
+        items: items,
+        patientName: patient
+    };
+    
+    allInvoices.unshift(newInvoice);
+    displayInvoices();
+    closeCreateInvoiceModal();
+    alert(`Invoice ${newInvoice.invoiceNumber} created successfully!`);
+}
+
+function editInvoice(invoiceId) {
+    alert('Edit invoice functionality - Coming soon!');
+}
+
+function recordPayment(invoiceId) {
+    // For admin, show a simpler payment recording interface
+    const invoice = allInvoices.find(inv => inv.id === invoiceId);
+    if (!invoice) return;
+    
+    const amount = prompt(`Record payment for ${invoice.invoiceNumber}\nBalance Due: KES ${formatCurrency(invoice.balanceDue)}\n\nEnter payment amount:`);
+    
+    if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+        const paymentAmount = parseFloat(amount);
+        
+        if (paymentAmount > invoice.balanceDue) {
+            alert('Payment amount cannot exceed balance due');
+            return;
+        }
+        
+        invoice.paidAmount += paymentAmount;
+        invoice.balanceDue -= paymentAmount;
+        
+        if (invoice.balanceDue === 0) {
+            invoice.status = 'paid';
+            invoice.paidAt = new Date().toISOString();
+        } else {
+            invoice.status = 'partially_paid';
+        }
+        
+        displayInvoices();
+        alert(`Payment of KES ${formatCurrency(paymentAmount)} recorded successfully!`);
+    }
+}
+
+// Add event listeners for invoice total calculation
+document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('input', (e) => {
+        if (e.target.classList.contains('item-quantity') || e.target.classList.contains('item-price')) {
+            updateInvoiceTotal();
+        }
+    });
+});

@@ -403,8 +403,31 @@
     </div>
     
     <div class="container">
-        <!-- Outstanding Balance Card -->
-        <div class="balance-card">
+        <!-- Admin Stats Card -->
+        <div class="balance-card" id="adminStatsCard" style="display: none;">
+            <h2>Billing Overview</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div>
+                    <div style="font-size: 14px; opacity: 0.9;">Total Outstanding</div>
+                    <div class="balance-amount" style="font-size: 32px;" id="totalOutstanding">KES 0.00</div>
+                </div>
+                <div>
+                    <div style="font-size: 14px; opacity: 0.9;">This Month</div>
+                    <div class="balance-amount" style="font-size: 32px;" id="monthlyRevenue">KES 0.00</div>
+                </div>
+                <div>
+                    <div style="font-size: 14px; opacity: 0.9;">Total Invoices</div>
+                    <div class="balance-amount" style="font-size: 32px;" id="totalInvoices">0</div>
+                </div>
+            </div>
+            <div class="balance-actions" style="margin-top: 20px;">
+                <button class="btn btn-white" onclick="showCreateInvoiceModal()">+ Create Invoice</button>
+                <button class="btn btn-outline" onclick="switchTab('outstanding')">View Outstanding</button>
+            </div>
+        </div>
+        
+        <!-- Patient Balance Card -->
+        <div class="balance-card" id="patientBalanceCard">
             <h2>Outstanding Balance</h2>
             <div class="balance-amount" id="outstandingBalance">KES 0.00</div>
             <div class="balance-actions">
@@ -457,6 +480,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <!-- Create Invoice Modal -->
+    <div id="createInvoiceModal" class="modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>Create New Invoice</h3>
+                <button class="close-modal" onclick="closeCreateInvoiceModal()">×</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="patientSelect">Patient</label>
+                <input type="text" id="patientSelect" placeholder="Enter patient name or ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="invoiceDueDate">Due Date</label>
+                <input type="date" id="invoiceDueDate">
+            </div>
+            
+            <div class="form-group">
+                <label>Invoice Items</label>
+                <div id="invoiceItems">
+                    <div class="invoice-item-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" placeholder="Description" class="item-description" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        <input type="number" placeholder="Qty" class="item-quantity" value="1" min="1" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        <input type="number" placeholder="Price" class="item-price" min="0" step="0.01" style="padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px;">
+                        <button type="button" onclick="removeInvoiceItem(this)" style="padding: 10px; background: #f44336; color: white; border: none; border-radius: 8px; cursor: pointer;">×</button>
+                    </div>
+                </div>
+                <button type="button" onclick="addInvoiceItem()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">+ Add Item</button>
+            </div>
+            
+            <div style="text-align: right; margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <p style="font-size: 20px; color: #1e3c72;"><strong>Total:</strong> KES <span id="invoiceTotal">0.00</span></p>
+            </div>
+            
+            <button class="btn btn-primary" style="width: 100%;" onclick="createInvoice()">Create Invoice</button>
         </div>
     </div>
     
