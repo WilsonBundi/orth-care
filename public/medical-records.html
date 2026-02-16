@@ -580,44 +580,15 @@
                     allRecords = await response.json();
                     displayRecords(allRecords);
                 } else {
-                    // Show mock data for demo
-                    allRecords = getMockRecords();
+                    allRecords = [];
                     displayRecords(allRecords);
+                    console.error('Failed to load medical records');
                 }
             } catch (error) {
                 console.error('Error loading records:', error);
-                allRecords = getMockRecords();
+                allRecords = [];
                 displayRecords(allRecords);
             }
-        }
-        
-        function getMockRecords() {
-            return [
-                {
-                    id: '1',
-                    filename: 'Blood Test Results - Jan 2026.pdf',
-                    fileType: 'lab_result',
-                    sizeBytes: 245000,
-                    createdAt: '2026-01-15T10:30:00Z',
-                    description: 'Complete blood count and chemistry panel'
-                },
-                {
-                    id: '2',
-                    filename: 'X-Ray - Right Knee.jpg',
-                    fileType: 'xray',
-                    sizeBytes: 1200000,
-                    createdAt: '2026-01-20T14:15:00Z',
-                    description: 'Knee injury assessment'
-                },
-                {
-                    id: '3',
-                    filename: 'Prescription - Pain Management.pdf',
-                    fileType: 'prescription',
-                    sizeBytes: 180000,
-                    createdAt: '2026-02-01T09:00:00Z',
-                    description: 'Post-surgery pain medication'
-                }
-            ];
         }
         
         function displayRecords(records) {

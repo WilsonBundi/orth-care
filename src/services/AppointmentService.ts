@@ -1,4 +1,4 @@
-import { db } from '../config/firebase';
+import { getFirestore } from '../config/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface Appointment {
@@ -14,6 +14,13 @@ export interface Appointment {
   reason?: string;
   notes?: string;
   symptoms?: string[];
+  confirmedBy?: string;
+  confirmedAt?: Date;
+  completedBy?: string;
+  completedAt?: Date;
+  cancelledBy?: string;
+  cancelledAt?: Date;
+  cancellationReason?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -30,7 +37,9 @@ export interface CreateAppointmentInput {
 }
 
 export class AppointmentService {
-  private collection = db.collection('appointments');
+  private get collection() {
+    return getFirestore().collection('appointments');
+  }
 
   async createAppointment(input: CreateAppointmentInput): Promise<Appointment> {
     const id = uuidv4();
@@ -94,6 +103,16 @@ export class AppointmentService {
       .orderBy('appointmentDate')
       .orderBy('startTime')
       .limit(10)
+      .get();
+
+    return snapshot.docs.map(doc => doc.data() as Appointment);
+  }
+
+  async getAllAppointments(): Promise<Appointment[]> {
+    const snapshot = await this.collection
+      .orderBy('appointmentDate', 'desc')
+      .orderBy('startTime', 'desc')
+      .limit(500)
       .get();
 
     return snapshot.docs.map(doc => doc.data() as Appointment);

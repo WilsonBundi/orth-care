@@ -60,7 +60,6 @@ async function loadOutstandingBalance() {
             const data = await response.json();
             document.getElementById('outstandingBalance').textContent = `KES ${formatCurrency(data.balance)}`;
         } else {
-            // Show mock balance for demo
             document.getElementById('outstandingBalance').textContent = 'KES 0.00';
         }
     } catch (error) {
@@ -78,66 +77,16 @@ async function loadInvoices() {
         if (response.ok) {
             allInvoices = await response.json();
         } else {
-            // Show mock invoices for demo
-            allInvoices = getMockInvoices();
+            allInvoices = [];
+            console.error('Failed to load invoices');
         }
         
         displayInvoices();
     } catch (error) {
         console.error('Error loading invoices:', error);
-        allInvoices = getMockInvoices();
+        allInvoices = [];
         displayInvoices();
     }
-}
-
-function getMockInvoices() {
-    return [
-        {
-            id: '1',
-            invoiceNumber: 'INV-000001',
-            issueDate: '2026-01-15',
-            dueDate: '2026-02-14',
-            totalAmount: 15000,
-            paidAmount: 0,
-            balanceDue: 15000,
-            status: 'pending',
-            items: [
-                { description: 'Consultation - Orthopedic', quantity: 1, unitPrice: 5000 },
-                { description: 'X-Ray - Knee', quantity: 1, unitPrice: 8000 },
-                { description: 'Medication', quantity: 1, unitPrice: 2000 }
-            ]
-        },
-        {
-            id: '2',
-            invoiceNumber: 'INV-000002',
-            issueDate: '2026-01-20',
-            dueDate: '2026-02-19',
-            totalAmount: 25000,
-            paidAmount: 10000,
-            balanceDue: 15000,
-            status: 'partially_paid',
-            items: [
-                { description: 'Physical Therapy Session', quantity: 5, unitPrice: 3000 },
-                { description: 'Lab Tests', quantity: 1, unitPrice: 10000 }
-            ]
-        },
-        {
-            id: '3',
-            invoiceNumber: 'INV-000003',
-            issueDate: '2025-12-10',
-            dueDate: '2026-01-09',
-            totalAmount: 8000,
-            paidAmount: 8000,
-            balanceDue: 0,
-            status: 'paid',
-            paidAt: '2026-01-05',
-            paymentMethod: 'mpesa',
-            items: [
-                { description: 'Follow-up Consultation', quantity: 1, unitPrice: 3000 },
-                { description: 'Prescription', quantity: 1, unitPrice: 5000 }
-            ]
-        }
-    ];
 }
 
 function displayInvoices() {
@@ -403,38 +352,12 @@ async function processPayment() {
             loadInvoices();
             loadOutstandingBalance();
         } else {
-            // For demo, simulate success
-            alert('Payment processed successfully! (Demo Mode)');
-            
-            // Update invoice locally
-            const invoice = allInvoices.find(inv => inv.id === currentInvoice.id);
-            if (invoice) {
-                invoice.paidAmount += currentInvoice.balanceDue;
-                invoice.balanceDue = 0;
-                invoice.status = 'paid';
-                invoice.paymentMethod = selectedPaymentMethod;
-                invoice.paidAt = new Date().toISOString();
-            }
-            
-            closePaymentModal();
-            displayInvoices();
+            const error = await response.json();
+            alert(`Payment failed: ${error.message || 'Please try again'}`);
         }
     } catch (error) {
         console.error('Payment error:', error);
-        alert('Payment processed successfully! (Demo Mode)');
-        
-        // Update invoice locally for demo
-        const invoice = allInvoices.find(inv => inv.id === currentInvoice.id);
-        if (invoice) {
-            invoice.paidAmount += currentInvoice.balanceDue;
-            invoice.balanceDue = 0;
-            invoice.status = 'paid';
-            invoice.paymentMethod = selectedPaymentMethod;
-            invoice.paidAt = new Date().toISOString();
-        }
-        
-        closePaymentModal();
-        displayInvoices();
+        alert('Payment failed. Please check your connection and try again.');
     }
 }
 
@@ -586,32 +509,41 @@ async function createInvoice() {
     
     const totalAmount = items.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
     
-    // Create invoice (demo mode - add to local array)
-    const newInvoice = {
-        id: `${allInvoices.length + 1}`,
-        invoiceNumber: `INV-${String(allInvoices.length + 1).padStart(6, '0')}`,
-        issueDate: new Date().toISOString().split('T')[0],
-        dueDate: dueDate,
-        totalAmount: totalAmount,
-        paidAmount: 0,
-        balanceDue: totalAmount,
-        status: 'pending',
-        items: items,
-        patientName: patient
-    };
-    
-    allInvoices.unshift(newInvoice);
-    displayInvoices();
-    closeCreateInvoiceModal();
-    alert(`Invoice ${newInvoice.invoiceNumber} created successfully!`);
+    try {
+        const response = await fetch('/api/invoices/create', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                patientIdentifier: patient,
+                dueDate: dueDate,
+                items: items,
+                totalAmount: totalAmount
+            })
+        });
+        
+        if (response.ok) {
+            const newInvoice = await response.json();
+            alert(`Invoice ${newInvoice.invoiceNumber} created successfully!`);
+            closeCreateInvoiceModal();
+            loadInvoices();
+        } else {
+            const error = await response.json();
+            alert(`Failed to create invoice: ${error.message || 'Please try again'}`);
+        }
+    } catch (error) {
+        console.error('Error creating invoice:', error);
+        alert('Failed to create invoice. Please check your connection and try again.');
+    }
 }
 
 function editInvoice(invoiceId) {
     alert('Edit invoice functionality - Coming soon!');
 }
 
-function recordPayment(invoiceId) {
-    // For admin, show a simpler payment recording interface
+async function recordPayment(invoiceId) {
     const invoice = allInvoices.find(inv => inv.id === invoiceId);
     if (!invoice) return;
     
@@ -625,18 +557,32 @@ function recordPayment(invoiceId) {
             return;
         }
         
-        invoice.paidAmount += paymentAmount;
-        invoice.balanceDue -= paymentAmount;
-        
-        if (invoice.balanceDue === 0) {
-            invoice.status = 'paid';
-            invoice.paidAt = new Date().toISOString();
-        } else {
-            invoice.status = 'partially_paid';
+        try {
+            const response = await fetch(`/api/invoices/${invoiceId}/payment`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    amount: paymentAmount,
+                    paymentMethod: 'cash',
+                    paymentReference: `ADMIN-${Date.now()}`,
+                    transactionId: `TXN-${Date.now()}`
+                })
+            });
+            
+            if (response.ok) {
+                alert(`Payment of KES ${formatCurrency(paymentAmount)} recorded successfully!`);
+                loadInvoices();
+            } else {
+                const error = await response.json();
+                alert(`Failed to record payment: ${error.message || 'Please try again'}`);
+            }
+        } catch (error) {
+            console.error('Error recording payment:', error);
+            alert('Failed to record payment. Please check your connection and try again.');
         }
-        
-        displayInvoices();
-        alert(`Payment of KES ${formatCurrency(paymentAmount)} recorded successfully!`);
     }
 }
 

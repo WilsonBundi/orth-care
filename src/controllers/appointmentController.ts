@@ -145,6 +145,68 @@ export class AppointmentController {
       res.status(500).json({ error: error.message });
     }
   }
+
+  // Admin endpoints
+  async getAllAppointments(req: Request, res: Response) {
+    try {
+      const appointments = await appointmentService.getAllAppointments();
+      res.json(appointments);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  async confirmAppointment(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const userId = (req as any).userId;
+
+      const appointment = await appointmentService.updateAppointment(id, {
+        status: 'confirmed',
+        confirmedBy: userId,
+        confirmedAt: new Date()
+      });
+
+      await auditService.logEvent({
+        userId,
+        eventType: AuditEventType.APPOINTMENT_UPDATED,
+        ipAddress: req.ip,
+        userAgent: req.get('user-agent') || '',
+        outcome: 'success',
+        details: { appointmentId: id, action: 'confirmed' },
+      });
+
+      res.json(appointment);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  async completeAppointment(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const userId = (req as any).userId;
+
+      const appointment = await appointmentService.updateAppointment(id, {
+        status: 'completed',
+        completedBy: userId,
+        completedAt: new Date()
+      });
+
+      await auditService.logEvent({
+        userId,
+        eventType: AuditEventType.APPOINTMENT_UPDATED,
+        ipAddress: req.ip,
+        userAgent: req.get('user-agent') || '',
+        outcome: 'success',
+        details: { appointmentId: id, action: 'completed' },
+      });
+
+      res.json(appointment);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 export const appointmentController = new AppointmentController();

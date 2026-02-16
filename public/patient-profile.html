@@ -385,30 +385,30 @@
                 }
             }
             
-            // If still no data, use demo data for testing
+            // If no data available, show empty state
             if (!profileData || Object.keys(profileData).length === 0) {
                 profileData = {
-                    citizenship: 'kenyan',
-                    idType: 'national_id',
-                    idNumber: '12345678',
-                    kraPin: 'A123456789Z',
-                    firstName: user.firstName || 'John',
-                    lastName: user.lastName || 'Doe',
-                    dateOfBirth: user.dateOfBirth || '1990-01-15',
-                    gender: 'male',
-                    maritalStatus: 'single',
-                    occupation: 'Software Developer',
-                    email: user.email || 'john.doe@example.com',
-                    phone: '+254 700 000 000',
-                    alternatePhone: '+254 711 000 000',
-                    country: 'Kenya',
-                    county: 'Nairobi',
-                    constituency: 'Westlands',
-                    ward: 'Kitisuru',
-                    address: '123 Main Street, Nairobi',
+                    citizenship: '',
+                    idType: '',
+                    idNumber: '',
+                    kraPin: '',
+                    firstName: user.firstName || '',
+                    lastName: user.lastName || '',
+                    dateOfBirth: user.dateOfBirth || '',
+                    gender: '',
+                    maritalStatus: '',
+                    occupation: '',
+                    email: user.email || '',
+                    phone: '',
+                    alternatePhone: '',
+                    country: '',
+                    county: '',
+                    constituency: '',
+                    ward: '',
+                    address: '',
                     dependants: []
                 };
-                console.log('Using demo profile data for display');
+                console.log('No profile data available - showing empty fields');
             }
             
             displayProfile(profileData);

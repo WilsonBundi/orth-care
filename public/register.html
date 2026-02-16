@@ -840,7 +840,12 @@
                     
                     <div class="form-group">
                         <label for="password">Password <span class="required">*</span></label>
-                        <input type="password" id="password" name="password" required>
+                        <div style="position: relative;">
+                            <input type="password" id="password" name="password" required style="padding-right: 45px;">
+                            <button type="button" onclick="togglePassword('password')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 20px; color: #666; padding: 5px;">
+                                <span id="toggleIconPassword">👁️</span>
+                            </button>
+                        </div>
                         <div id="passwordError" class="field-error"></div>
                         <div style="font-size: 12px; color: #666; margin-top: 5px;">
                             Minimum 8 characters with uppercase, lowercase, number, and special character
@@ -849,7 +854,12 @@
                     
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        <div style="position: relative;">
+                            <input type="password" id="confirmPassword" name="confirmPassword" required style="padding-right: 45px;">
+                            <button type="button" onclick="togglePassword('confirmPassword')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 20px; color: #666; padding: 5px;">
+                                <span id="toggleIconConfirmPassword">👁️</span>
+                            </button>
+                        </div>
                         <div id="confirmPasswordError" class="field-error"></div>
                     </div>
                     
@@ -883,6 +893,20 @@
         window.totalSteps = 6;
         window.dependantCount = 0;
         window.formData = {};
+
+        // Toggle password visibility
+        window.togglePassword = function(fieldId) {
+            const passwordInput = document.getElementById(fieldId);
+            const toggleIcon = document.getElementById('toggleIcon' + fieldId.charAt(0).toUpperCase() + fieldId.slice(1));
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { db } from '../config/firebase';
+import { getFirestore } from '../config/firebase';
 
 export class AdminController {
   /**
@@ -7,18 +7,31 @@ export class AdminController {
    */
   async getAllPatients(req: Request, res: Response) {
     try {
+      const db = getFirestore();
+      
+      // Try without orderBy first to avoid index issues
       const usersSnapshot = await db.collection('users')
         .where('role', '==', 'patient')
-        .orderBy('createdAt', 'desc')
         .get();
 
       const patients = usersSnapshot.docs.map(doc => {
         const data = doc.data();
         // Remove sensitive data
         delete data.passwordHash;
-        return data;
+        return {
+          id: doc.id,
+          ...data
+        };
       });
 
+      // Sort in memory by createdAt
+      patients.sort((a: any, b: any) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(0);
+        const dateB = b.createdAt?.toDate?.() || new Date(0);
+        return dateB.getTime() - dateA.getTime();
+      });
+
+      console.log(`Found ${patients.length} patients`);
       res.json(patients);
     } catch (error: any) {
       console.error('Error fetching patients:', error);
@@ -31,6 +44,7 @@ export class AdminController {
    */
   async getPatientById(req: Request, res: Response) {
     try {
+      const db = getFirestore();
       const { id } = req.params;
 
       const userDoc = await db.collection('users').doc(id).get();
@@ -43,7 +57,7 @@ export class AdminController {
       // Remove sensitive data
       delete patient?.passwordHash;
 
-      res.json(patient);
+      res.json({ id: userDoc.id, ...patient });
     } catch (error: any) {
       console.error('Error fetching patient:', error);
       res.status(500).json({ error: error.message });
@@ -55,15 +69,25 @@ export class AdminController {
    */
   async getAllUsers(req: Request, res: Response) {
     try {
-      const usersSnapshot = await db.collection('users')
-        .orderBy('createdAt', 'desc')
-        .get();
+      const db = getFirestore();
+      
+      const usersSnapshot = await db.collection('users').get();
 
       const users = usersSnapshot.docs.map(doc => {
         const data = doc.data();
         // Remove sensitive data
         delete data.passwordHash;
-        return data;
+        return {
+          id: doc.id,
+          ...data
+        };
+      });
+
+      // Sort in memory by createdAt
+      users.sort((a: any, b: any) => {
+        const dateA = a.createdAt?.toDate?.() || new Date(0);
+        const dateB = b.createdAt?.toDate?.() || new Date(0);
+        return dateB.getTime() - dateA.getTime();
       });
 
       res.json(users);
@@ -78,6 +102,7 @@ export class AdminController {
    */
   async updateUserRole(req: Request, res: Response) {
     try {
+      const db = getFirestore();
       const { id } = req.params;
       const { role } = req.body;
 
@@ -102,6 +127,8 @@ export class AdminController {
    */
   async getSystemStats(req: Request, res: Response) {
     try {
+      const db = getFirestore();
+      
       const usersSnapshot = await db.collection('users').get();
       const appointmentsSnapshot = await db.collection('appointments').get();
 

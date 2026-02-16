@@ -45,14 +45,18 @@ export async function register(req: Request, res: Response) {
       });
     }
 
-    // Map the location fields to Address interface
+    // Map the location fields to Address interface with Kenya-specific fields
     const addressObj = {
       street: address || '',
       city: constituency || '',
       state: county || '',
       zipCode: ward || '',
-      country: country || 'Kenya'
-    };
+      country: country || 'Kenya',
+      // Add Kenya-specific fields for admin view
+      county: county || '',
+      constituency: constituency || '',
+      ward: ward || ''
+    } as any;
 
     const user = await authenticationService.register(
       email,
@@ -83,12 +87,14 @@ export async function register(req: Request, res: Response) {
 
     res.status(201).json({
       token: session.id,
+      sessionId: session.id,
       user: {
         id: user.id,
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.role
+        role: user.role,
+        dateOfBirth: user.dateOfBirth
       },
       message: 'Registration successful'
     });
