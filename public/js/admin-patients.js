@@ -66,8 +66,8 @@ async function loadPatients() {
         if (response.ok) {
             allPatients = await response.json();
         } else {
-            // Use mock data for demo
-            allPatients = getMockPatients();
+            console.error('Failed to load patients');
+            allPatients = [];
         }
         
         filteredPatients = [...allPatients];
@@ -75,69 +75,15 @@ async function loadPatients() {
         updateStats();
     } catch (error) {
         console.error('Error loading patients:', error);
-        allPatients = getMockPatients();
-        filteredPatients = [...allPatients];
+        allPatients = [];
+        filteredPatients = [];
         displayPatients();
         updateStats();
     }
 }
 
-// Mock patient data
-function getMockPatients() {
-    return [
-        {
-            id: 'user_001',
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'john.doe@example.com',
-            phoneNumber: '+254712345678',
-            dateOfBirth: '1990-05-15',
-            address: {
-                country: 'Kenya',
-                county: 'Nairobi',
-                constituency: 'Westlands',
-                ward: 'Parklands',
-                street: '123 Waiyaki Way'
-            },
-            role: 'patient',
-            createdAt: '2026-02-10T10:30:00Z'
-        },
-        {
-            id: 'user_002',
-            firstName: 'Jane',
-            lastName: 'Smith',
-            email: 'jane.smith@example.com',
-            phoneNumber: '+254723456789',
-            dateOfBirth: '1985-08-22',
-            address: {
-                country: 'Kenya',
-                county: 'Kiambu',
-                constituency: 'Ruiru',
-                ward: 'Biashara',
-                street: '456 Thika Road'
-            },
-            role: 'patient',
-            createdAt: '2026-02-15T14:20:00Z'
-        },
-        {
-            id: 'user_003',
-            firstName: 'Peter',
-            lastName: 'Mwangi',
-            email: 'peter.mwangi@example.com',
-            phoneNumber: '+254734567890',
-            dateOfBirth: '1992-03-10',
-            address: {
-                country: 'Kenya',
-                county: 'Nairobi',
-                constituency: 'Embakasi East',
-                ward: 'Mihango',
-                street: '789 Jogoo Road'
-            },
-            role: 'patient',
-            createdAt: '2026-02-16T09:15:00Z'
-        }
-    ];
-}
+// Remove mock patient data function
+// function getMockPatients() { ... } - REMOVED
 
 // Display patients in table
 function displayPatients() {

@@ -1,68 +1,131 @@
-import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth';
-import { userRepository } from '../repositories/UserRepository.firebase';
-import { auditService } from '../services/AuditService';
-import { AuditEventType } from '../types/models';
+import { Request, Response } from 'express';
+import { db } from '../config/firebase';
 
-/**
- * Admin Controller
- * Handles admin-specific operations like user management and system monitoring
- */
-class AdminController {
+export class AdminController {
+  /**
+   * Get all patients (admin only)
+   */
+  async getAllPatients(req: Request, res: Response) {
+    try {
+      const usersSnapshot = await db.collection('users')
+        .where('role', '==', 'patient')
+        .orderBy('createdAt', 'desc')
+        .get();
+
+      const patients = usersSnapshot.docs.map(doc => {
+        const data = doc.data();
+        // Remove sensitive data
+        delete data.passwordHash;
+        return data;
+      });
+
+      res.json(patients);
+    } catch (error: any) {
+      console.error('Error fetching patients:', error);
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  /**
+   * Get single patient details (admin only)
+   */
+  async getPatientById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const userDoc = await db.collection('users').doc(id).get();
+
+      if (!userDoc.exists) {
+        return res.status(404).json({ error: 'Patient not found' });
+      }
+
+      const patient = userDoc.data();
+      // Remove sensitive data
+      delete patient?.passwordHash;
+
+      res.json(patient);
+    } catch (error: any) {
+      console.error('Error fetching patient:', error);
+      res.status(500).json({ error: error.message });
+    }
+  }
+
   /**
    * Get all users (admin only)
    */
-  async getAllUsers(req: AuthRequest, res: Response) {
+  async getAllUsers(req: Request, res: Response) {
     try {
-      // In a real implementation, fetch all users from repository
-      // For now, return success message
-      
-      await auditService.logEvent({
-        userId: req.userId!,
-        eventType: AuditEventType.ACCESS_GRANTED,
-        ipAddress: req.ip || 'unknown',
-        userAgent: req.get('user-agent') || 'unknown',
-        outcome: 'success',
-        details: { action: 'view_all_users' }
+      const usersSnapshot = await db.collection('users')
+        .orderBy('createdAt', 'desc')
+        .get();
+
+      const users = usersSnapshot.docs.map(doc => {
+        const data = doc.data();
+        // Remove sensitive data
+        delete data.passwordHash;
+        return data;
       });
 
-      res.json({
-        success: true,
-        message: 'User list retrieved',
-        users: []
-      });
-    } catch (error) {
+      res.json(users);
+    } catch (error: any) {
       console.error('Error fetching users:', error);
-      res.status(500).json({ error: 'Failed to fetch users' });
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+  /**
+   * Update user role (super admin only)
+   */
+  async updateUserRole(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const { role } = req.body;
+
+      if (!role) {
+        return res.status(400).json({ error: 'Role is required' });
+      }
+
+      await db.collection('users').doc(id).update({
+        role,
+        updatedAt: new Date()
+      });
+
+      res.json({ message: 'User role updated successfully' });
+    } catch (error: any) {
+      console.error('Error updating user role:', error);
+      res.status(500).json({ error: error.message });
     }
   }
 
   /**
    * Get system statistics (admin only)
    */
-  async getSystemStats(req: AuthRequest, res: Response) {
+  async getSystemStats(req: Request, res: Response) {
     try {
-      await auditService.logEvent({
-        userId: req.userId!,
-        eventType: AuditEventType.ACCESS_GRANTED,
-        ipAddress: req.ip || 'unknown',
-        userAgent: req.get('user-agent') || 'unknown',
-        outcome: 'success',
-        details: { action: 'view_system_stats' }
-      });
+      const usersSnapshot = await db.collection('users').get();
+      const appointmentsSnapshot = await db.collection('appointments').get();
+
+      const totalUsers = usersSnapshot.size;
+      const totalPatients = usersSnapshot.docs.filter(doc => doc.data().role === 'patient').length;
+      const totalAppointments = appointmentsSnapshot.size;
+
+      // Count new users today
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const newUsersToday = usersSnapshot.docs.filter(doc => {
+        const createdAt = doc.data().createdAt?.toDate();
+        return createdAt && createdAt >= today;
+      }).length;
 
       res.json({
-        success: true,
-        stats: {
-          totalUsers: 0,
-          totalAppointments: 0,
-          totalInvoices: 0,
-          outstandingBalance: 0
-        }
+        totalUsers,
+        totalPatients,
+        totalAppointments,
+        newUsersToday
       });
-    } catch (error) {
-      console.error('Error fetching stats:', error);
-      res.status(500).json({ error: 'Failed to fetch statistics' });
+    } catch (error: any) {
+      console.error('Error fetching system stats:', error);
+      res.status(500).json({ error: error.message });
     }
   }
 }
