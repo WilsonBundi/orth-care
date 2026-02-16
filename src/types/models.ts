@@ -10,12 +10,27 @@
 // ============================================================================
 
 /**
- * User roles in the system
- * Currently only supports patient role, but designed for future extension
+ * User roles in the system - Healthcare Organization Hierarchy
+ * Implements role-based access control with clear separation of duties
  */
 export enum Role {
-  PATIENT = 'patient'
-  // Future: DOCTOR, NURSE, ADMIN, etc.
+  // Patient Role
+  PATIENT = 'patient',
+  
+  // Clinical Staff Roles
+  NURSE = 'nurse',
+  DOCTOR = 'doctor',
+  SPECIALIST = 'specialist',
+  
+  // Administrative Roles
+  RECEPTIONIST = 'receptionist',
+  BILLING_CLERK = 'billing_clerk',
+  RECORDS_MANAGER = 'records_manager',
+  
+  // Management Roles
+  CLINIC_MANAGER = 'clinic_manager',
+  SYSTEM_ADMIN = 'system_admin',
+  SUPER_ADMIN = 'super_admin'
 }
 
 /**

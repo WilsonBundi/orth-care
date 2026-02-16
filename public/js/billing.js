@@ -7,9 +7,26 @@ if (!token) {
     window.location.href = '/login.html';
 }
 
-// Check admin role
-if (user.role !== 'admin') {
-    alert('Access denied: This page is restricted to administrators only');
+// Define role hierarchy
+const roleLevel = {
+    'patient': 1,
+    'receptionist': 2,
+    'nurse': 3,
+    'billing_clerk': 3,
+    'records_manager': 4,
+    'doctor': 5,
+    'specialist': 6,
+    'clinic_manager': 7,
+    'system_admin': 8,
+    'super_admin': 9
+};
+
+const userLevel = roleLevel[user.role] || 1;
+const requiredLevel = roleLevel.billing_clerk; // Minimum BILLING_CLERK role required
+
+// Check if user has sufficient role level
+if (userLevel < requiredLevel) {
+    alert('Access denied: This page requires billing staff privileges (Billing Clerk level or higher)');
     window.location.href = '/dashboard.html';
 }
 

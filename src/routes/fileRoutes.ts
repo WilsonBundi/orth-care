@@ -1,7 +1,8 @@
 import { Router, type Router as ExpressRouter } from 'express';
 import { authenticate } from '../middleware/auth';
-import { requireRole } from '../middleware/roleCheck';
+import { requireMinimumRole } from '../middleware/roleCheck';
 import { apiRateLimiter } from '../middleware/rateLimiting';
+import { Role } from '../types/models';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -39,12 +40,13 @@ const upload = multer({
   }
 });
 
-// All routes require authentication and admin role
+// All routes require authentication and minimum NURSE role
+// Nurses can view/upload, Doctors can edit, Records Manager can delete
 router.use(authenticate);
 router.use(apiRateLimiter);
-router.use(requireRole('admin'));
+router.use(requireMinimumRole(Role.NURSE));
 
-// Upload medical record file
+// Upload medical record file - Requires NURSE or higher
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
@@ -75,7 +77,7 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-// Get all medical record files
+// Get all medical record files - Requires NURSE or higher
 router.get('/my-files', async (req, res) => {
   try {
     // In a real implementation, this would fetch from database
@@ -87,7 +89,7 @@ router.get('/my-files', async (req, res) => {
   }
 });
 
-// Get specific file
+// Get specific file - Requires NURSE or higher
 router.get('/:fileId', async (req, res) => {
   try {
     const { fileId } = req.params;
@@ -100,8 +102,8 @@ router.get('/:fileId', async (req, res) => {
   }
 });
 
-// Delete file
-router.delete('/:fileId', async (req, res) => {
+// Delete file - Requires RECORDS_MANAGER or higher
+router.delete('/:fileId', requireMinimumRole(Role.RECORDS_MANAGER), async (req, res) => {
   try {
     const { fileId } = req.params;
     // In a real implementation, delete from database and filesystem
