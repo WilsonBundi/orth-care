@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Healthcare Images - Quick Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+        
+        .status {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        
+        .status strong {
+            color: #856404;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .image-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+        
+        .image-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .image-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .image-card .filename {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .image-card .specs {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .image-card .description {
+            color: #444;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .search-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .search-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-link:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .steps {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .steps h2 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+        }
+        
+        .steps ol {
+            margin-left: 20px;
+        }
+        
+        .steps li {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .checklist {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .checklist h2 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        
+        .checklist label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .optimize-section {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .optimize-section h2 {
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+        
+        .optimize-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .optimize-link:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+            text-align: center;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📸 Download Healthcare Images</h1>
+        <p class="subtitle">Quick guide to add professional images to your Orthopedic's Care portal</p>
+        
+        <div class="status">
+            <strong>⚠️ Status:</strong> Images not yet added. Follow this guide to download and add professional healthcare images.
+        </div>
+        
+        <div class="steps">
+            <h2>🎯 Quick Steps</h2>
+            <ol>
+                <li><strong>Click the search links below</strong> for each required image</li>
+                <li><strong>Download</strong> the image that best matches the description</li>
+                <li><strong>Rename</strong> the downloaded file to match the required filename</li>
+                <li><strong>Optimize</strong> the image using TinyPNG (link below)</li>
+                <li><strong>Save</strong> to <code>public/images/</code> directory</li>
+                <li><strong>Test</strong> locally by opening index.html</li>
+                <li><strong>Push</strong> to GitHub when all images are ready</li>
+            </ol>
+        </div>
+        
+        <h2 style="margin-top: 40px; color: #667eea;">Required Images (6 total)</h2>
+        
+        <div class="image-grid">
+            <!-- Image 1 -->
+            <div class="image-card">
+                <h3>1. Doctor Consultation</h3>
+                <div class="filename">doctor-consultation.jpg</div>
+                <div class="specs">📐 Size: 800x600px | 💾 Max: 100KB</div>
+                <div class="description">
+                    Professional orthopedic doctor examining a patient. Warm, welcoming atmosphere. 
+                    Prefer African/Kenyan healthcare setting.
+                </div>
+                <div class="search-links">
+                    <a href="https://unsplash.com/s/photos/african-doctor-patient" target="_blank" class="search-link">
+                        🔍 Unsplash
+                    </a>
+                    <a href="https://www.pexels.com/search/doctor%20patient%20consultation/" target="_blank" class="search-link">
+                        🔍 Pexels
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Image 2 -->
+            <div class="image-card">
+                <h3>2. Medical Facility</h3>
+                <div class="filename">medical-facility.jpg</div>
+                <div class="specs">📐 Size: 800x600px | 💾 Max: 100KB</div>
+                <div class="description">
+                    Modern, clean clinic interior with medical equipment. Bright, welcoming atmosphere. 
+                    Not overly sterile.
+                </div>
+                <div class="search-links">
+                    <a href="https://unsplash.com/s/photos/modern-hospital-interior" target="_blank" class="search-link">
+                        🔍 Unsplash
+                    </a>
+                    <a href="https://www.pexels.com/search/medical%20clinic/" target="_blank" class="search-link">
+                        🔍 Pexels
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Image 3 -->
+            <div class="image-card">
+                <h3>3. Digital Health</h3>
+                <div class="filename">digital-health.jpg</div>
+                <div class="specs">📐 Size: 800x600px | 💾 Max: 100KB</div>
+                <div class="description">
+                    Patient using tablet or smartphone for healthcare management, or doctor with digital device. 
+                    Modern, tech-savvy healthcare.
+                </div>
+                <div class="search-links">
+                    <a href="https://unsplash.com/s/photos/digital-health-technology" target="_blank" class="search-link">
+                        🔍 Unsplash
+                    </a>
+                    <a href="https://www.pexels.com/search/patient%20using%20tablet/" target="_blank" class="search-link">
+                        🔍 Pexels
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Image 4 -->
+            <div class="image-card">
+                <h3>4. Joint Pain Treatment</h3>
+                <div class="filename">joint-pain.jpg</div>
+                <div class="specs">📐 Size: 800x600px | 💾 Max: 100KB</div>
+                <div class="description">
+                    Doctor examining patient's joint (knee or hip). Professional orthopedic examination. 
+                    Focus on joint assessment.
+                </div>
+                <div class="search-links">
+                    <a href="https://unsplash.com/s/photos/orthopedic-knee-examination" target="_blank" class="search-link">
+                        🔍 Unsplash
+                    </a>
+                    <a href="https://www.pexels.com/search/knee%20pain%20treatment/" target="_blank" class="search-link">
+                        🔍 Pexels
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Image 5 -->
+            <div class="image-card">
+                <h3>5. Sports Medicine</h3>
+                <div class="filename">knee-pain.jpg</div>
+                <div class="specs">📐 Size: 800x600px | 💾 Max: 100KB</div>
+                <div class="description">
+                    Athletic person receiving treatment or physical therapy. Active, recovery-focused imagery. 
+                    Sports injury treatment.
+                </div>
+                <div class="search-links">
+                    <a href="https://unsplash.com/s/photos/physical-therapy-sports" target="_blank" class="search-link">
+                        🔍 Unsplash
+                    </a>
+                    <a href="https://www.pexels.com/search/sports%20medicine/" target="_blank" class="search-link">
+                        🔍 Pexels
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Image 6 -->
+            <div class="image-card">
+                <h3>6. Pain Management</h3>
+                <div class="filename">shoulder-pain.jpg</div>
+                <div class="specs">📐 Size: 800x600px | 💾 Max: 100KB</div>
+                <div class="description">
+                    Doctor examining or treating patient's shoulder. Caring, professional interaction. 
+                    Pain management focus.
+                </div>
+                <div class="search-links">
+                    <a href="https://unsplash.com/s/photos/shoulder-pain-treatment" target="_blank" class="search-link">
+                        🔍 Unsplash
+                    </a>
+                    <a href="https://www.pexels.com/search/shoulder%20examination/" target="_blank" class="search-link">
+                        🔍 Pexels
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="optimize-section">
+            <h2>🔧 Optimize Your Images</h2>
+            <p>After downloading, compress your images to reduce file size while maintaining quality:</p>
+            <a href="https://tinypng.com/" target="_blank" class="optimize-link">
+                Open TinyPNG Image Compressor →
+            </a>
+            <p style="margin-top: 15px; color: #721c24;">
+                <strong>Important:</strong> Upload each image to TinyPNG, download the compressed version, 
+                and ensure it's under 100KB before adding to your project.
+            </p>
+        </div>
+        
+        <div class="checklist">
+            <h2>✅ Completion Checklist</h2>
+            <label><input type="checkbox"> Downloaded all 6 images</label>
+            <label><input type="checkbox"> Renamed files correctly</label>
+            <label><input type="checkbox"> Optimized with TinyPNG (under 100KB each)</label>
+            <label><input type="checkbox"> Saved to <code>public/images/</code> directory</label>
+            <label><input type="checkbox"> Images look professional and match SHA style</label>
+            <label><input type="checkbox"> Tested locally in browser</label>
+            <label><input type="checkbox"> Ready to push to GitHub</label>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Need more help?</strong> Check <code>ADD_YOUR_IMAGES_HERE.md</code> or <code>IMAGE_GUIDELINES.md</code></p>
+            <p style="margin-top: 10px;">Once images are added, push to GitHub and Render will auto-deploy! 🚀</p>
+        </div>
+    </div>
+</body>
+</html>
