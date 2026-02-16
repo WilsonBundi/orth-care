@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orthopedic's Care - Specialized Orthopedic Clinic</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Orthopedic's Care - Specialized Orthopedic Clinic | Expert Bone & Joint Treatment</title>
+    <meta name="description" content="Expert orthopedic care in Kenya. Board-certified specialist providing comprehensive diagnosis, treatment, and rehabilitation for bone, joint, and muscle conditions. Book online 24/7.">
+    <meta name="keywords" content="orthopedic clinic, bone doctor, joint replacement, sports medicine, orthopedic surgeon Kenya, joint pain treatment, spine care">
+    <meta name="author" content="Orthopedic's Care">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://orth-care.onrender.com/">
+    <meta property="og:title" content="Orthopedic's Care - Specialized Orthopedic Clinic">
+    <meta property="og:description" content="Expert orthopedic care with comprehensive diagnosis, treatment, and rehabilitation for bone, joint, and muscle conditions.">
+    <meta property="og:image" content="https://orth-care.onrender.com/images/medical-facility.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://orth-care.onrender.com/">
+    <meta property="twitter:title" content="Orthopedic's Care - Specialized Orthopedic Clinic">
+    <meta property="twitter:description" content="Expert orthopedic care with comprehensive diagnosis, treatment, and rehabilitation for bone, joint, and muscle conditions.">
+    <meta property="twitter:image" content="https://orth-care.onrender.com/images/medical-facility.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Fonts with display=swap for performance -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+    
     <style>
         /* Professional Healthcare Portal Styles - Version 2.0 - SHA-Inspired */
         /* Last Updated: 2026-02-16 - Professional Image Styling Applied */
@@ -1427,20 +1460,134 @@
                 font-size: 1.5rem;
             }
         }
+        
+        /* Accessibility - Focus States */
+        *:focus {
+            outline: 3px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        .btn:focus,
+        .header-nav a:focus {
+            outline: 3px solid #ffffff;
+            outline-offset: 2px;
+        }
+        
+        /* Skip to Main Content Link */
+        .skip-to-main {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            z-index: 10000;
+            border-radius: 0 0 4px 0;
+        }
+        
+        .skip-to-main:focus {
+            top: 0;
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .scroll-to-top:active {
+            transform: translateY(-2px);
+        }
+        
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Skip to Main Content for Accessibility -->
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
     <!-- Header -->
-    <header class="header">
+    <header class="header" role="banner">
         <div class="header-content">
             <div class="logo-section">
-                <div class="logo"><i class="fas fa-hospital-alt"></i></div>
+                <div class="logo" aria-label="Orthopedic's Care Logo"><i class="fas fa-hospital-alt"></i></div>
                 <div class="site-title">
                     <h1>Orthopedic's Care</h1>
                     <p>Specialized Orthopedic Clinic</p>
                 </div>
             </div>
-            <nav class="header-nav">
+            <nav class="header-nav" role="navigation" aria-label="Main navigation">
                 <a href="#services">Services</a>
                 <a href="#features">Features</a>
                 <a href="/login.html" class="btn-primary">Login</a>
@@ -1449,6 +1596,7 @@
     </header>
 
     <!-- Hero Section -->
+    <main id="main-content">
     <section class="hero">
         <div class="hero-content">
             <h2>Welcome to Orthopedic's Care</h2>
@@ -1596,9 +1744,10 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="footer-content">
             <div class="footer-section">
                 <h3>About Us</h3>
@@ -1643,8 +1792,8 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <button class="scroll-to-top" id="scrollToTop">
-        <i class="fas fa-chevron-up"></i>
+    <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
     </button>
 
     <script>
