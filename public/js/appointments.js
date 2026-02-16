@@ -206,7 +206,7 @@ function calculateEndTime(startTime) {
 
 async function loadAppointments() {
     try {
-        const response = await fetch('/api/appointments/my-appointments', {
+        const response = await fetch('/api/appointments/my', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         
