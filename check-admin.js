@@ -9,9 +9,9 @@ require('dotenv').config();
 console.log('🔍 Checking for admin user...\n');
 
 // Check environment variables first
-if (!process.env.FIREBASE_CREDENTIALS_BASE64) {
-  console.log('❌ FIREBASE_CREDENTIALS_BASE64 not found in .env file');
-  console.log('💡 Please configure Firebase credentials first');
+if (!process.env.FIREBASE_SERVICE_ACCOUNT && !process.env.FIREBASE_CREDENTIALS_BASE64) {
+  console.log('❌ Firebase credentials not found in .env file');
+  console.log('💡 Please add either FIREBASE_SERVICE_ACCOUNT or FIREBASE_CREDENTIALS_BASE64');
   console.log('   See: FIREBASE_SETUP.md for instructions\n');
   process.exit(1);
 }
@@ -27,9 +27,14 @@ console.log('   Project ID:', process.env.FIREBASE_PROJECT_ID);
 
 // Initialize Firebase Admin
 try {
-  const serviceAccount = JSON.parse(
-    Buffer.from(process.env.FIREBASE_CREDENTIALS_BASE64, 'base64').toString('utf-8')
-  );
+  let serviceAccount;
+  if (process.env.FIREBASE_CREDENTIALS_BASE64) {
+    serviceAccount = JSON.parse(
+      Buffer.from(process.env.FIREBASE_CREDENTIALS_BASE64, 'base64').toString('utf-8')
+    );
+  } else {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  }
 
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -39,7 +44,7 @@ try {
   console.log('✅ Firebase initialized\n');
 } catch (error) {
   console.log('❌ Failed to initialize Firebase:', error.message);
-  console.log('💡 Check your FIREBASE_CREDENTIALS_BASE64 is valid\n');
+  console.log('💡 Check your Firebase credentials are valid\n');
   process.exit(1);
 }
 

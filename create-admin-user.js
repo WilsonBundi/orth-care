@@ -8,9 +8,18 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 // Initialize Firebase Admin
-const serviceAccount = JSON.parse(
-  Buffer.from(process.env.FIREBASE_CREDENTIALS_BASE64 || '', 'base64').toString('utf-8')
-);
+let serviceAccount;
+if (process.env.FIREBASE_CREDENTIALS_BASE64) {
+  serviceAccount = JSON.parse(
+    Buffer.from(process.env.FIREBASE_CREDENTIALS_BASE64, 'base64').toString('utf-8')
+  );
+} else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+  console.error('❌ Firebase credentials not found in .env file');
+  console.log('💡 Please add either FIREBASE_SERVICE_ACCOUNT or FIREBASE_CREDENTIALS_BASE64');
+  process.exit(1);
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

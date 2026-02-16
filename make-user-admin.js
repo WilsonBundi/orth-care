@@ -17,9 +17,16 @@ if (!email) {
 
 // Initialize Firebase Admin
 try {
-  const serviceAccount = JSON.parse(
-    Buffer.from(process.env.FIREBASE_CREDENTIALS_BASE64 || '', 'base64').toString('utf-8')
-  );
+  let serviceAccount;
+  if (process.env.FIREBASE_CREDENTIALS_BASE64) {
+    serviceAccount = JSON.parse(
+      Buffer.from(process.env.FIREBASE_CREDENTIALS_BASE64, 'base64').toString('utf-8')
+    );
+  } else if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  } else {
+    throw new Error('Firebase credentials not found');
+  }
 
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -28,7 +35,7 @@ try {
 } catch (error) {
   console.error('❌ Failed to initialize Firebase:', error.message);
   console.log('\n💡 Make sure your .env file has:');
-  console.log('   - FIREBASE_CREDENTIALS_BASE64');
+  console.log('   - FIREBASE_SERVICE_ACCOUNT or FIREBASE_CREDENTIALS_BASE64');
   console.log('   - FIREBASE_PROJECT_ID');
   process.exit(1);
 }
