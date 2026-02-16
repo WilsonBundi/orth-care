@@ -7,7 +7,7 @@ import { AuditEventType } from '../types/models';
 export class AppointmentController {
   async createAppointment(req: Request, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = (req as any).userId;
       const { doctorId, appointmentDate, startTime, endTime, appointmentType, reason, symptoms } = req.body;
 
       const appointment = await appointmentService.createAppointment({
@@ -56,8 +56,8 @@ export class AppointmentController {
 
   async getMyAppointments(req: Request, res: Response) {
     try {
-      const userId = (req as any).user.id;
-      const role = (req as any).user.role;
+      const userId = (req as any).userId;
+      const role = (req as any).user?.role || 'patient';
 
       const appointments = role === 'doctor'
         ? await appointmentService.getDoctorAppointments(userId)
@@ -71,8 +71,8 @@ export class AppointmentController {
 
   async getUpcomingAppointments(req: Request, res: Response) {
     try {
-      const userId = (req as any).user.id;
-      const role = (req as any).user.role;
+      const userId = (req as any).userId;
+      const role = (req as any).user?.role || 'patient';
 
       const appointments = await appointmentService.getUpcomingAppointments(userId, role);
 
@@ -98,7 +98,7 @@ export class AppointmentController {
   async cancelAppointment(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const userId = (req as any).user.id;
+      const userId = (req as any).userId;
       const { reason } = req.body;
 
       await appointmentService.cancelAppointment(id, userId, reason);
